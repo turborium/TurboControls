@@ -21,7 +21,7 @@ unit TurboExternalGraphics;
 {$ASSERTIONS ON}
 {$RANGECHECKS ON}
 {$OVERFLOWCHECKS ON}
-{$OPTIMIZATION OFF}
+{$OPTIMIZATION ON}
 {$SCOPEDENUMS ON}
 
 interface
@@ -74,8 +74,8 @@ type
   public
     R, G, B, A: Byte;
   public
-    class function MakeRgba(R, G, B, A: Byte): TTurboColor; static; inline;
-    class function MakeRgb(R, G, B: Byte): TTurboColor; static; inline;
+    class function Create(R, G, B, A: Byte): TTurboColor; static; inline; overload;
+    class function Create(R, G, B: Byte): TTurboColor; static; inline; overload;
     property Color: TColor read GetColor write SetColor;
     property FPColor: TFPColor read GetFPColor write SetFPColor;
   end;
@@ -227,12 +227,12 @@ end;
 
 { TTurboColor }
 
-class function TTurboColor.MakeRgba(R, G, B, A: Byte): TTurboColor;
+class function TTurboColor.Create(R, G, B, A: Byte): TTurboColor;
 begin
   Result := TTurboColor((A shl 24) or (B shl 16) or (G shl 8) or R);
 end;
 
-class function TTurboColor.MakeRgb(R, G, B: Byte): TTurboColor;
+class function TTurboColor.Create(R, G, B: Byte): TTurboColor;
 begin
   Result := TTurboColor(($FF shl 24) or (B shl 16) or (G shl 8) or R);
 end;
@@ -296,7 +296,8 @@ begin
   end;
 end;
 
-{$PUSH}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
 procedure HslToRgb(Hue, Saturation, Lightness: Double; out Red, Green, Blue: Byte);
@@ -340,7 +341,8 @@ begin
   Green := Trunc(G * 255.0 + 0.5);
   Blue := Trunc(B * 255.0 + 0.5);
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 procedure RgbToHsl(Red, Green, Blue: Byte; out Hue, Saturation, Lightness: Double);
 var
@@ -408,7 +410,8 @@ begin
   end;
 end;
 
-{$PUSH}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
 procedure HsvToRgb(Hue, Saturation, Value: Double; out Red, Green, Blue: Byte);
@@ -483,7 +486,8 @@ begin
   Green := Trunc(G * 255.0 + 0.5);
   Blue := Trunc(B * 255.0 + 0.5);
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 procedure RgbToHsv(Red, Green, Blue: Byte; out Hue, Saturation, Value: Double);
 var

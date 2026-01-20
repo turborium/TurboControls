@@ -40,12 +40,12 @@ begin
   RegisterComponents('TurboControls', [
     TTurboColorCell,
     TTurboAlphaLinePicker,
-    TTurboRgbAxisPicker,
     TTurboRgbLinePicker,
-    TTurboHslAxisPicker,
+    TTurboRgbAxisPicker,
     TTurboHslLinePicker,
-    TTurboHsvAxisPicker,
-    TTurboHsvLinePicker
+    TTurboHslAxisPicker,
+    TTurboHsvLinePicker,
+    TTurboHsvAxisPicker
   ]);
 end;
 

@@ -4365,11 +4365,10 @@ begin
   inherited Destroy();
 end;
 
-{$PUSH}
-{$IFNDEF DEBUG}
-  {$RANGECHECKS OFF}
-  {$OVERFLOWCHECKS OFF}
-{$ENDIF}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
+{$RANGECHECKS OFF}
+{$OVERFLOWCHECKS OFF}
 procedure TTurboColorLinePicker.DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboLinePickerShader1D);
 var
   X, Y, I: Integer;
@@ -4480,13 +4479,13 @@ begin
     end;
   end;
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
-{$PUSH}
-{$IFNDEF DEBUG}
-  {$RANGECHECKS OFF}
-  {$OVERFLOWCHECKS OFF}
-{$ENDIF}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
+{$RANGECHECKS OFF}
+{$OVERFLOWCHECKS OFF}
 procedure TTurboColorLinePicker.DrawRangeBitmap2D(Image: TLazIntfImage; Shader: TTurboLinePickerShader2D);
 var
   X, Y, I: Integer;
@@ -4578,7 +4577,8 @@ begin
     end;
   end;
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 procedure TTurboColorLinePicker.RangeBackgroundChange(Sender: TObject);
 begin
@@ -4676,11 +4676,10 @@ begin
   inherited Destroy();
 end;
 
-{$PUSH}
-{$IFNDEF DEBUG}
-  {$RANGECHECKS OFF}
-  {$OVERFLOWCHECKS OFF}
-{$ENDIF}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
+{$RANGECHECKS OFF}
+{$OVERFLOWCHECKS OFF}
 procedure TTurboColorFloatLinePicker.DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboLinePickerFloatShader1D);
 var
   X, Y, I: Integer;
@@ -4790,13 +4789,13 @@ begin
     end;
   end;
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
-{$PUSH}
-{$IFNDEF DEBUG}
-  {$RANGECHECKS OFF}
-  {$OVERFLOWCHECKS OFF}
-{$ENDIF}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
+{$RANGECHECKS OFF}
+{$OVERFLOWCHECKS OFF}
 procedure TTurboColorFloatLinePicker.DrawRangeBitmap2D(Image: TLazIntfImage; Shader: TTurboLinePickerFloatShader2D);
 var
   X, Y, I: Integer;
@@ -4883,7 +4882,8 @@ begin
     end;
   end;
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 procedure TTurboColorFloatLinePicker.RangeBackgroundChange(Sender: TObject);
 begin
@@ -4981,11 +4981,10 @@ begin
   inherited Destroy();
 end;
 
-{$PUSH}
-{$IFNDEF DEBUG}
-  {$RANGECHECKS OFF}
-  {$OVERFLOWCHECKS OFF}
-{$ENDIF}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
+{$RANGECHECKS OFF}
+{$OVERFLOWCHECKS OFF}
 procedure TTurboColorAxisPicker.DrawRangeBitmap(Image: TLazIntfImage; Shader: TTurboAxisPickerShader);
 var
   X, Y, I: Integer;
@@ -5057,7 +5056,8 @@ begin
     end;
   end;
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 procedure TTurboColorAxisPicker.RangeBackgroundChange(Sender: TObject);
 begin
@@ -5152,11 +5152,10 @@ begin
   inherited Destroy();
 end;
 
-{$PUSH}
-{$IFNDEF DEBUG}
-  {$RANGECHECKS OFF}
-  {$OVERFLOWCHECKS OFF}
-{$ENDIF}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
+{$RANGECHECKS OFF}
+{$OVERFLOWCHECKS OFF}
 procedure TTurboColorFloatAxisPicker.DrawRangeBitmap(Image: TLazIntfImage; Shader: TTurboAxisPickerFloatShader);
 var
   X, Y, I: Integer;
@@ -5228,7 +5227,8 @@ begin
     end;
   end;
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 procedure TTurboColorFloatAxisPicker.RangeBackgroundChange(Sender: TObject);
 begin
@@ -5359,7 +5359,8 @@ begin
   UpdateHsl(H, S, L);
 end;
 
-{$PUSH}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
 function TTurboHslLinePicker.ShaderHue(Value: Double): TTurboColor;
@@ -5367,7 +5368,7 @@ var
   R, G, B: Byte;
 begin
   HslToRgb(Value, 1.0, 0.5, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslLinePicker.ShaderLightnessGreenBlueRedGradient(ValueX, ValueY: Double): TTurboColor;
@@ -5391,7 +5392,7 @@ begin
   begin
     HslToRgb(ValueY * Multiplier + Adder, 1.0, ValueX, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslLinePicker.ShaderLightnessRedGreenBlueGradient(ValueX, ValueY: Double): TTurboColor;
@@ -5415,7 +5416,7 @@ begin
   begin
     HslToRgb(ValueY * Multiplier + Adder, 1.0, ValueX, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslLinePicker.ShaderLightnessRedGreenBlueLines(ValueX, ValueY: Double): TTurboColor;
@@ -5433,7 +5434,7 @@ begin
   begin
     HslToRgb(120.0 / 360.0, 1.0, ValueX, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslLinePicker.ShaderModulatedHue(Value: Double): TTurboColor;
@@ -5441,7 +5442,7 @@ var
   R, G, B: Byte;
 begin
   HslToRgb(Value, FSaturation, FLightness, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslLinePicker.ShaderModulatedLightness(Value: Double): TTurboColor;
@@ -5449,7 +5450,7 @@ var
   R, G, B: Byte;
 begin
   HslToRgb(FHue, FSaturation, Value, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslLinePicker.ShaderModulatedSaturation(Value: Double): TTurboColor;
@@ -5457,7 +5458,7 @@ var
   R, G, B: Byte;
 begin
   HslToRgb(FHue, Value, FLightness, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslLinePicker.ShaderSaturationGreenBlueRedGradient(ValueX, ValueY: Double): TTurboColor;
@@ -5481,7 +5482,7 @@ begin
   begin
     HslToRgb(ValueY * Multiplier + Adder, ValueX, 0.5, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslLinePicker.ShaderSaturationRedGreenBlueGradient(ValueX, ValueY: Double): TTurboColor;
@@ -5505,7 +5506,7 @@ begin
   begin
     HslToRgb(ValueY * Multiplier + Adder, ValueX, 0.5, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslLinePicker.ShaderSaturationRedGreenBlueLines(ValueX, ValueY: Double): TTurboColor;
@@ -5523,9 +5524,10 @@ begin
   begin
     HslToRgb(120.0 / 360.0, ValueX, 0.5, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 function TTurboHslLinePicker.GetCurrentColor(): TColor;
 var
@@ -5847,7 +5849,8 @@ begin
   UpdateHsv(H, S, V);
 end;
 
-{$PUSH}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
 function TTurboHsvLinePicker.ShaderHue(Value: Double): TTurboColor;
@@ -5855,7 +5858,7 @@ var
   R, G, B: Byte;
 begin
   HsvToRgb(Value, 1.0, 1.0, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvLinePicker.ShaderValueGreenBlueRedGradient(ValueX, ValueY: Double): TTurboColor;
@@ -5879,7 +5882,7 @@ begin
   begin
     HsvToRgb(ValueY * Multiplier + Adder, 1.0, ValueX, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvLinePicker.ShaderValueRedGreenBlueGradient(ValueX, ValueY: Double): TTurboColor;
@@ -5903,7 +5906,7 @@ begin
   begin
     HsvToRgb(ValueY * Multiplier + Adder, 1.0, ValueX, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvLinePicker.ShaderValueRedGreenBlueLines(ValueX, ValueY: Double): TTurboColor;
@@ -5921,7 +5924,7 @@ begin
   begin
     HsvToRgb(120.0 / 360.0, 1.0, ValueX, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvLinePicker.ShaderModulatedHue(Value: Double): TTurboColor;
@@ -5929,7 +5932,7 @@ var
   R, G, B: Byte;
 begin
   HsvToRgb(Value, FSaturation, FValue, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvLinePicker.ShaderModulatedValue(Value: Double): TTurboColor;
@@ -5937,7 +5940,7 @@ var
   R, G, B: Byte;
 begin
   HsvToRgb(FHue, FSaturation, Value, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvLinePicker.ShaderModulatedSaturation(Value: Double): TTurboColor;
@@ -5945,7 +5948,7 @@ var
   R, G, B: Byte;
 begin
   HsvToRgb(FHue, Value, FValue, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvLinePicker.ShaderSaturationGreenBlueRedGradient(ValueX, ValueY: Double): TTurboColor;
@@ -5969,7 +5972,7 @@ begin
   begin
     HsvToRgb(ValueY * Multiplier + Adder, ValueX, 1.0, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvLinePicker.ShaderSaturationRedGreenBlueGradient(ValueX, ValueY: Double): TTurboColor;
@@ -5993,7 +5996,7 @@ begin
   begin
     HsvToRgb(ValueY * Multiplier + Adder, ValueX, 1.0, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvLinePicker.ShaderSaturationRedGreenBlueLines(ValueX, ValueY: Double): TTurboColor;
@@ -6011,9 +6014,10 @@ begin
   begin
     HsvToRgb(120.0 / 360.0, ValueX, 1.0, R, G, B);
   end;
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 function TTurboHsvLinePicker.GetCurrentColor(): TColor;
 var
@@ -6404,39 +6408,41 @@ begin
   PickerChange(NeedUpdate);
 end;
 
-{$PUSH}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
 function TTurboRgbLinePicker.ShaderRed(Value: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(Value, 0, 0);
+  Result := TTurboColor.Create(Value, 0, 0);
 end;
 
 function TTurboRgbLinePicker.ShaderModulatedRed(Value: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(Value, FGreen, FBlue);
+  Result := TTurboColor.Create(Value, FGreen, FBlue);
 end;
 
 function TTurboRgbLinePicker.ShaderGreen(Value: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(0, Value, 0);
+  Result := TTurboColor.Create(0, Value, 0);
 end;
 
 function TTurboRgbLinePicker.ShaderModulatedGreen(Value: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(FRed, Value, FBlue);
+  Result := TTurboColor.Create(FRed, Value, FBlue);
 end;
 
 function TTurboRgbLinePicker.ShaderBlue(Value: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(0, 0, Value);
+  Result := TTurboColor.Create(0, 0, Value);
 end;
 
 function TTurboRgbLinePicker.ShaderModulatedBlue(Value: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(FRed, FGreen, Value);
+  Result := TTurboColor.Create(FRed, FGreen, Value);
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 function TTurboRgbLinePicker.GetPickerRangeShader1D(): TTurboLinePickerShader1D;
 begin
@@ -6604,26 +6610,27 @@ begin
   end;
 end;
 
-{$PUSH}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
 function TTurboAlphaLinePicker.ShaderModulated(Value: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgba(GetRValue(FColorPreview), GetGValue(FColorPreview), GetBValue(FColorPreview), Value);
+  Result := TTurboColor.Create(GetRValue(FColorPreview), GetGValue(FColorPreview), GetBValue(FColorPreview), Value);
 end;
 
 function TTurboAlphaLinePicker.ShaderRedGreenBlueLines(ValueX: Integer; ValueY: Double): TTurboColor;
 begin
   if ValueY <= 1.0 / 3.0 then
   begin
-    Result := TTurboColor.MakeRgba(255, 0, 0, ValueX);
+    Result := TTurboColor.Create(255, 0, 0, ValueX);
   end else
   if ValueY > 2.0 / 3.0 then
   begin
-    Result := TTurboColor.MakeRgba(0, 0, 255, ValueX);
+    Result := TTurboColor.Create(0, 0, 255, ValueX);
   end else
   begin
-    Result := TTurboColor.MakeRgba(0, 255, 0, ValueX);
+    Result := TTurboColor.Create(0, 255, 0, ValueX);
   end;
 end;
 
@@ -6648,7 +6655,7 @@ begin
   begin
     HslToRgb(ValueY * Multiplier + Adder, 1.0, 0.5, R, G, B);
   end;
-  Result := TTurboColor.MakeRgba(R, G, B, ValueX);
+  Result := TTurboColor.Create(R, G, B, ValueX);
 end;
 
 function TTurboAlphaLinePicker.ShaderGreenBlueRedGradient(ValueX: Integer; ValueY: Double): TTurboColor;
@@ -6673,9 +6680,10 @@ begin
     HslToRgb(ValueY * Multiplier + Adder, 1.0, 0.5, R, G, B);
   end;
 
-  Result := TTurboColor.MakeRgba(R, G, B, ValueX);
+  Result := TTurboColor.Create(R, G, B, ValueX);
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 function TTurboAlphaLinePicker.GetPickerRangeShader1D(): TTurboLinePickerShader1D;
 begin
@@ -6940,7 +6948,8 @@ begin
   PickerChange(NeedUpdate);
 end;
 
-{$PUSH}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
 function TTurboHslAxisPicker.ShaderSaturationAndLightness(ValueX, ValueY: Double): TTurboColor;
@@ -6948,7 +6957,7 @@ var
   R, G, B: Byte;
 begin
   HslToRgb(FHue, ValueX, ValueY, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslAxisPicker.ShaderLightnessAndSaturation(ValueX, ValueY: Double): TTurboColor;
@@ -6956,7 +6965,7 @@ var
   R, G, B: Byte;
 begin
   HslToRgb(FHue, ValueY, ValueX, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslAxisPicker.ShaderSaturationAndHue(ValueX, ValueY: Double): TTurboColor;
@@ -6964,7 +6973,7 @@ var
   R, G, B: Byte;
 begin
   HslToRgb(ValueY, ValueX, FLightness, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslAxisPicker.ShaderHueAndSaturation(ValueX, ValueY: Double): TTurboColor;
@@ -6972,7 +6981,7 @@ var
   R, G, B: Byte;
 begin
   HslToRgb(ValueX, ValueY, FLightness, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslAxisPicker.ShaderLightnessAndHue(ValueX, ValueY: Double): TTurboColor;
@@ -6980,7 +6989,7 @@ var
   R, G, B: Byte;
 begin
   HslToRgb(ValueY, FSaturation, ValueX, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHslAxisPicker.ShaderHueAndLightness(ValueX, ValueY: Double): TTurboColor;
@@ -6988,9 +6997,10 @@ var
   R, G, B: Byte;
 begin
   HslToRgb(ValueX, FSaturation, ValueY, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 function TTurboHslAxisPicker.GetPickerRangeShader(): TTurboLinePickerFloatShader2D;
 begin
@@ -7131,7 +7141,8 @@ begin
   Result := FSaturation <> 0.5;
 end;
 
-{$PUSH}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
 function TTurboHsvAxisPicker.ShaderHueAndValue(ValueX, ValueY: Double): TTurboColor;
@@ -7139,7 +7150,7 @@ var
   R, G, B: Byte;
 begin
   HsvToRgb(ValueX, FSaturation, ValueY, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvAxisPicker.ShaderHueAndSaturation(ValueX, ValueY: Double): TTurboColor;
@@ -7147,7 +7158,7 @@ var
   R, G, B: Byte;
 begin
   HsvToRgb(ValueX, ValueY, FValue, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvAxisPicker.ShaderValueAndHue(ValueX, ValueY: Double): TTurboColor;
@@ -7155,7 +7166,7 @@ var
   R, G, B: Byte;
 begin
   HsvToRgb(ValueY, FSaturation, ValueX, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvAxisPicker.ShaderValueAndSaturation(ValueX, ValueY: Double): TTurboColor;
@@ -7163,7 +7174,7 @@ var
   R, G, B: Byte;
 begin
   HsvToRgb(FHue, ValueY, ValueX, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvAxisPicker.ShaderSaturationAndHue(ValueX, ValueY: Double): TTurboColor;
@@ -7171,7 +7182,7 @@ var
   R, G, B: Byte;
 begin
   HsvToRgb(ValueY, ValueX, FValue, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
 
 function TTurboHsvAxisPicker.ShaderSaturationAndValue(ValueX, ValueY: Double): TTurboColor;
@@ -7179,9 +7190,10 @@ var
   R, G, B: Byte;
 begin
   HsvToRgb(FHue, ValueX, ValueY, R, G, B);
-  Result := TTurboColor.MakeRgb(R, G, B);
+  Result := TTurboColor.Create(R, G, B);
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 procedure TTurboHsvAxisPicker.SetCurrentColor(Value: TColor);
 var
@@ -7500,39 +7512,41 @@ begin
   Result := RGB(FRed, FGreen, FBlue);
 end;
 
-{$PUSH}
+{$IFOPT R+}{$DEFINE RANGECHECKS_ON}{$ENDIF}
+{$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
 function TTurboRgbAxisPicker.ShaderRedAndGreen(ValueX, ValueY: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(ValueX, ValueY, FBlue);
+  Result := TTurboColor.Create(ValueX, ValueY, FBlue);
 end;
 
 function TTurboRgbAxisPicker.ShaderRedAndBlue(ValueX, ValueY: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(ValueX, FGreen, ValueY);
+  Result := TTurboColor.Create(ValueX, FGreen, ValueY);
 end;
 
 function TTurboRgbAxisPicker.ShaderGreenAndRed(ValueX, ValueY: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(ValueY, ValueX, FBlue);
+  Result := TTurboColor.Create(ValueY, ValueX, FBlue);
 end;
 
 function TTurboRgbAxisPicker.ShaderGreenAndBlue(ValueX, ValueY: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(FRed, ValueX, ValueY);
+  Result := TTurboColor.Create(FRed, ValueX, ValueY);
 end;
 
 function TTurboRgbAxisPicker.ShaderBlueAndRed(ValueX, ValueY: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(ValueY, FGreen, ValueX);
+  Result := TTurboColor.Create(ValueY, FGreen, ValueX);
 end;
 
 function TTurboRgbAxisPicker.ShaderBlueAndGreen(ValueX, ValueY: Integer): TTurboColor;
 begin
-  Result := TTurboColor.MakeRgb(FRed, ValueY, ValueX);
+  Result := TTurboColor.Create(FRed, ValueY, ValueX);
 end;
-{$POP}
+{$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
+{$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
 procedure TTurboRgbAxisPicker.SetCurrentColor(Value: TColor);
 begin
