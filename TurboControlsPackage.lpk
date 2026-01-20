@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="TurboControlsPackage"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Turborium"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <CodeGeneration>
+        <Optimizations>
+          <OptimizationLevel Value="2"/>
+        </Optimizations>
+      </CodeGeneration>
+    </CompilerOptions>
+    <Description Value="TurboControls LCL Library"/>
+    <License Value="You can choose one of two licenses:
+
+- Turborium Modified MIT License
+- GPL v3
+
+See LICENSE.txt for the full license text of the Turborium Modified MIT License.
+
+Users may obtain a commercial version of this software without the requirement to display the &quot;About&quot; notice in their application. Such commercial license is available directly from Turborium under separate terms and conditions."/>
+    <Files>
+      <Item>
+        <Filename Value="TurboControls.pas"/>
+        <UnitName Value="TurboControls"/>
+      </Item>
+      <Item>
+        <Filename Value="TurboExternalGraphics.pas"/>
+        <UnitName Value="TurboExternalGraphics"/>
+      </Item>
+      <Item>
+        <Filename Value="TurboPickers.pas"/>
+        <UnitName Value="TurboPickers"/>
+      </Item>
+      <Item>
+        <Filename Value="TurboControlsRegister.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="TurboControlsRegister"/>
+      </Item>
+    </Files>
+    <RequiredPkgs>
+      <Item>
+        <PackageName Value="LCL"/>
+      </Item>
+      <Item>
+        <PackageName Value="FCL"/>
+      </Item>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
