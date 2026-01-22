@@ -81,6 +81,7 @@
         <Filename Value="UnitFrameClassicPicker.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FrameClassicPicker"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit>
     </Units>

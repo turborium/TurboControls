@@ -79,7 +79,7 @@ object FrameClassicPicker: TFrameClassicPicker
     BorderSpacing.Top = 4
     BorderSpacing.Right = 20
     MaxValue = 255
-    TabOrder = 2
+    TabOrder = 3
     OnChange = SpinEditColorChange
   end
   object SpinEditRed: TSpinEdit
@@ -94,7 +94,7 @@ object FrameClassicPicker: TFrameClassicPicker
     Anchors = [akTop, akRight]
     BorderSpacing.Right = 20
     MaxValue = 255
-    TabOrder = 3
+    TabOrder = 2
     OnChange = SpinEditColorChange
   end
   object SpinEditBlue: TSpinEdit
