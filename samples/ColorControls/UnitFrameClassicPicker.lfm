@@ -1,0 +1,235 @@
+object FrameClassicPicker: TFrameClassicPicker
+  Left = 0
+  Height = 595
+  Top = 0
+  Width = 499
+  ClientHeight = 595
+  ClientWidth = 499
+  DesignTimePPI = 144
+  LCLVersion = '4.99.0.0'
+  ParentBackground = False
+  ParentFont = False
+  TabOrder = 0
+  DesignLeft = 591
+  DesignTop = 39
+  object HslAxisPicker: TTurboHslAxisPicker
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = HslLinePicker
+    Left = 8
+    Height = 300
+    Top = 8
+    Width = 430
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 8
+    BorderSpacing.Top = 8
+    Layout = InsideThumb
+    ParentBackground = False
+    RangePadding.Top = 10
+    RangePadding.Bottom = 10
+    RangePadding.Auto = [Left, Right]
+    TabOrder = 0
+    ThumbKind = Cross
+    ThumbSize.Size = 20
+    ThumbSize.Auto = False
+    VerticalReverse = True
+    OnChange = HslPickerChange
+    HorizontalKind = Hue
+    VerticalKind = Saturation
+  end
+  object HslLinePicker: TTurboHslLinePicker
+    AnchorSideLeft.Control = HslAxisPicker
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = HslAxisPicker
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = HslAxisPicker
+    AnchorSideBottom.Side = asrBottom
+    Left = 446
+    Height = 300
+    Top = 8
+    Width = 45
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Left = 8
+    BorderSpacing.Right = 8
+    OnChange = HslPickerChange
+    Orientation = Vertical
+    ParentBackground = False
+    RangePadding.Top = 10
+    RangePadding.Bottom = 10
+    RangePadding.Auto = [Left, Right]
+    Reverse = True
+    TabOrder = 1
+    ThumbLayout = Second
+    ThumbSize.Width = 15
+    ThumbSize.Height = 20
+    ThumbSize.Auto = []
+    Kind = Lightness
+  end
+  object SpinEditGreen: TSpinEdit
+    AnchorSideTop.Control = SpinEditRed
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 397
+    Height = 33
+    Top = 345
+    Width = 82
+    Anchors = [akTop, akRight]
+    BorderSpacing.Top = 4
+    BorderSpacing.Right = 20
+    MaxValue = 255
+    TabOrder = 2
+    OnChange = SpinEditColorChange
+  end
+  object SpinEditRed: TSpinEdit
+    AnchorSideTop.Control = HslAxisPicker
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 397
+    Height = 33
+    Top = 308
+    Width = 82
+    Anchors = [akTop, akRight]
+    BorderSpacing.Right = 20
+    MaxValue = 255
+    TabOrder = 3
+    OnChange = SpinEditColorChange
+  end
+  object SpinEditBlue: TSpinEdit
+    AnchorSideTop.Control = SpinEditGreen
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 397
+    Height = 33
+    Top = 382
+    Width = 82
+    Anchors = [akTop, akRight]
+    BorderSpacing.Top = 4
+    BorderSpacing.Right = 20
+    MaxValue = 255
+    TabOrder = 4
+    OnChange = SpinEditColorChange
+  end
+  object ColorCellPreview: TTurboColorCell
+    AnchorSideTop.Control = SpinEditRed
+    AnchorSideRight.Control = LabelRed
+    AnchorSideBottom.Control = SpinEditBlue
+    AnchorSideBottom.Side = asrBottom
+    Left = 253
+    Height = 107
+    Top = 308
+    Width = 80
+    Anchors = [akTop, akRight, akBottom]
+    Interactive = False
+    TabOrder = 5
+  end
+  object LabelRed: TLabel
+    AnchorSideTop.Control = SpinEditRed
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = SpinEditRed
+    Left = 333
+    Height = 25
+    Top = 312
+    Width = 60
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight]
+    BorderSpacing.Right = 4
+    Caption = 'Red:'
+    Constraints.MaxWidth = 60
+    Constraints.MinWidth = 60
+  end
+  object LabelGreen: TLabel
+    AnchorSideTop.Control = SpinEditGreen
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = SpinEditGreen
+    Left = 333
+    Height = 25
+    Top = 349
+    Width = 60
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight]
+    BorderSpacing.Right = 4
+    Caption = 'Green:'
+    Constraints.MaxWidth = 60
+    Constraints.MinWidth = 60
+  end
+  object LabelBlue: TLabel
+    AnchorSideTop.Control = SpinEditBlue
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Control = SpinEditBlue
+    Left = 333
+    Height = 25
+    Top = 386
+    Width = 60
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight]
+    BorderSpacing.Right = 4
+    Caption = 'Blue:'
+    Constraints.MaxWidth = 60
+    Constraints.MinWidth = 60
+  end
+  object GroupBoxPalette: TGroupBox
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = HslAxisPicker
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = ColorCellPreview
+    AnchorSideBottom.Control = ColorCellPreview
+    AnchorSideBottom.Side = asrBottom
+    Left = 8
+    Height = 107
+    Top = 308
+    Width = 237
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BorderSpacing.Left = 8
+    BorderSpacing.Right = 8
+    Caption = 'Palette'
+    ChildSizing.EnlargeHorizontal = crsHomogenousSpaceResize
+    ChildSizing.EnlargeVertical = crsHomogenousSpaceResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkVertical = crsHomogenousChildResize
+    ChildSizing.Layout = cclTopToBottomThenLeftToRight
+    ClientHeight = 77
+    ClientWidth = 233
+    ParentBackground = False
+    TabOrder = 6
+    object ColorCell1: TTurboColorCell
+      Left = 8
+      Height = 48
+      Top = 14
+      Width = 48
+      OnClick = ColorCellClick
+      TabOrder = 0
+      Value = 1079273
+    end
+    object ColorCell2: TTurboColorCell
+      Left = 64
+      Height = 48
+      Top = 14
+      Width = 48
+      OnClick = ColorCellClick
+      TabOrder = 1
+      Value = 12697890
+    end
+    object ColorCell3: TTurboColorCell
+      Left = 121
+      Height = 48
+      Top = 14
+      Width = 48
+      OnClick = ColorCellClick
+      TabOrder = 2
+      Value = 15098558
+    end
+    object ColorCell4: TTurboColorCell
+      Left = 177
+      Height = 48
+      Top = 14
+      Width = 48
+      OnClick = ColorCellClick
+      TabOrder = 3
+      Value = 14243622
+    end
+  end
+end

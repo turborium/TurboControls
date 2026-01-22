@@ -1,0 +1,443 @@
+object FrameHsvLinePicker: TFrameHsvLinePicker
+  Left = 0
+  Height = 600
+  Top = 0
+  Width = 480
+  ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+  ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+  ChildSizing.Layout = cclLeftToRightThenTopToBottom
+  ClientHeight = 600
+  ClientWidth = 480
+  DesignTimePPI = 144
+  LCLVersion = '4.99.0.0'
+  ParentBackground = False
+  ParentFont = False
+  TabOrder = 0
+  DesignLeft = 517
+  DesignTop = 39
+  object GroupBoxPreview: TGroupBox
+    Left = 0
+    Height = 85
+    Top = 0
+    Width = 480
+    AutoSize = True
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Preview'
+    ClientHeight = 55
+    ClientWidth = 476
+    ParentBackground = False
+    TabOrder = 0
+    object ColorCellPreview: TTurboColorCell
+      AnchorSideLeft.Control = GroupBoxPreview
+      AnchorSideLeft.Side = asrCenter
+      AnchorSideTop.Control = GroupBoxPreview
+      AnchorSideTop.Side = asrCenter
+      Left = 178
+      Height = 40
+      Top = 7
+      Width = 120
+      Interactive = False
+      TabOrder = 0
+    end
+  end
+  object GroupBoxHsv: TGroupBox
+    AnchorSideRight.Side = asrBottom
+    Left = 0
+    Height = 147
+    Top = 85
+    Width = 480
+    AutoSize = True
+    Caption = 'HSV'
+    ClientHeight = 117
+    ClientWidth = 476
+    ParentBackground = False
+    TabOrder = 1
+    object LabelHue: TLabel
+      AnchorSideLeft.Control = GroupBoxHsv
+      AnchorSideTop.Control = HsvLinePickerHue
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 7
+      Width = 90
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Hue:'
+      Constraints.MaxWidth = 90
+      Constraints.MinWidth = 90
+      ParentBidiMode = False
+    end
+    object HsvLinePickerHue: TTurboHsvLinePicker
+      AnchorSideLeft.Control = LabelHue
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideRight.Control = SpinEditHue
+      Left = 94
+      Height = 39
+      Top = 0
+      Width = 296
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = HsvLinePickerChange
+      Orientation = Horizontal
+      ParentBackground = False
+      TabOrder = 0
+      Kind = Hue
+      PreviewStyle = GreenBlueRedGradient
+    end
+    object SpinEditHue: TFloatSpinEdit
+      AnchorSideTop.Control = HsvLinePickerHue
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = GroupBoxHsv
+      AnchorSideRight.Side = asrBottom
+      Left = 390
+      Height = 33
+      Top = 3
+      Width = 82
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      DecimalPlaces = 3
+      Increment = 0.01
+      MaxValue = 1
+      TabOrder = 1
+      OnChange = SpinEditHsvChange
+    end
+    object LabelSaturation: TLabel
+      AnchorSideLeft.Control = GroupBoxHsv
+      AnchorSideTop.Control = HsvLinePickerSaturation
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 46
+      Width = 90
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Saturation:'
+      Constraints.MaxWidth = 90
+      Constraints.MinWidth = 90
+    end
+    object HsvLinePickerSaturation: TTurboHsvLinePicker
+      AnchorSideLeft.Control = LabelSaturation
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = HsvLinePickerHue
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = SpinEditSaturation
+      Left = 94
+      Height = 39
+      Top = 39
+      Width = 296
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = HsvLinePickerChange
+      Orientation = Horizontal
+      ParentBackground = False
+      TabOrder = 2
+      Kind = Saturation
+    end
+    object SpinEditSaturation: TFloatSpinEdit
+      AnchorSideTop.Control = HsvLinePickerSaturation
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Side = asrBottom
+      Left = 390
+      Height = 33
+      Top = 42
+      Width = 82
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      DecimalPlaces = 3
+      Increment = 0.01
+      MaxValue = 1
+      TabOrder = 3
+      OnChange = SpinEditHsvChange
+    end
+    object LabelValue: TLabel
+      AnchorSideLeft.Control = GroupBoxHsv
+      AnchorSideTop.Control = HsvLinePickerValue
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 85
+      Width = 90
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Value:'
+      Constraints.MaxWidth = 90
+      Constraints.MinWidth = 90
+    end
+    object HsvLinePickerValue: TTurboHsvLinePicker
+      AnchorSideLeft.Control = LabelValue
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = HsvLinePickerSaturation
+      AnchorSideTop.Side = asrBottom
+      Left = 94
+      Height = 39
+      Top = 78
+      Width = 296
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = HsvLinePickerChange
+      Orientation = Horizontal
+      ParentBackground = False
+      TabOrder = 4
+      Kind = Value
+    end
+    object SpinEditValue: TFloatSpinEdit
+      AnchorSideTop.Control = HsvLinePickerValue
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = GroupBoxHsv
+      AnchorSideRight.Side = asrBottom
+      Left = 390
+      Height = 33
+      Top = 81
+      Width = 82
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      DecimalPlaces = 3
+      Increment = 0.01
+      MaxValue = 1
+      TabOrder = 5
+      OnChange = SpinEditHsvChange
+    end
+  end
+  object GroupBoxRgb: TGroupBox
+    Left = 0
+    Height = 147
+    Top = 232
+    Width = 480
+    AutoSize = True
+    Caption = 'RGB'
+    ClientHeight = 117
+    ClientWidth = 476
+    ParentBackground = False
+    TabOrder = 2
+    object LabelRed: TLabel
+      AnchorSideLeft.Control = GroupBoxRgb
+      AnchorSideTop.Control = RgbLinePickerRed
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 7
+      Width = 90
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Red:'
+      Constraints.MaxWidth = 90
+      Constraints.MinWidth = 90
+    end
+    object SpinEditRed: TSpinEdit
+      AnchorSideTop.Control = RgbLinePickerRed
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = GroupBoxRgb
+      AnchorSideRight.Side = asrBottom
+      Left = 390
+      Height = 33
+      Top = 3
+      Width = 82
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      MaxValue = 255
+      TabOrder = 1
+      OnChange = SpinEditRgbChange
+    end
+    object LabelGreen: TLabel
+      AnchorSideLeft.Control = GroupBoxRgb
+      AnchorSideTop.Control = RgbLinePickerGreen
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 46
+      Width = 90
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Green:'
+      Constraints.MaxWidth = 90
+      Constraints.MinWidth = 90
+    end
+    object SpinEditGreen: TSpinEdit
+      AnchorSideTop.Control = RgbLinePickerGreen
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = GroupBoxRgb
+      AnchorSideRight.Side = asrBottom
+      Left = 390
+      Height = 33
+      Top = 42
+      Width = 82
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      MaxValue = 255
+      TabOrder = 3
+      OnChange = SpinEditRgbChange
+    end
+    object LabelBlue: TLabel
+      AnchorSideLeft.Control = GroupBoxRgb
+      AnchorSideTop.Control = RgbLinePickerBlue
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 85
+      Width = 90
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Blue:'
+      Constraints.MaxWidth = 90
+      Constraints.MinWidth = 90
+    end
+    object SpinEditBlue: TSpinEdit
+      AnchorSideTop.Control = RgbLinePickerBlue
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = GroupBoxRgb
+      AnchorSideRight.Side = asrBottom
+      Left = 390
+      Height = 33
+      Top = 81
+      Width = 82
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      MaxValue = 255
+      TabOrder = 5
+      OnChange = SpinEditRgbChange
+    end
+    object RgbLinePickerRed: TTurboRgbLinePicker
+      AnchorSideLeft.Control = LabelRed
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = GroupBoxRgb
+      AnchorSideRight.Control = SpinEditRed
+      Left = 94
+      Height = 39
+      Top = 0
+      Width = 296
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = RgbLinePickerChange
+      Orientation = Horizontal
+      ParentBackground = False
+      TabOrder = 0
+      Kind = Red
+    end
+    object RgbLinePickerGreen: TTurboRgbLinePicker
+      AnchorSideLeft.Control = LabelGreen
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = RgbLinePickerRed
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = SpinEditGreen
+      Left = 94
+      Height = 39
+      Top = 39
+      Width = 296
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = RgbLinePickerChange
+      Orientation = Horizontal
+      ParentBackground = False
+      TabOrder = 2
+      Kind = Green
+    end
+    object RgbLinePickerBlue: TTurboRgbLinePicker
+      AnchorSideLeft.Control = LabelBlue
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = RgbLinePickerGreen
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = SpinEditBlue
+      Left = 94
+      Height = 39
+      Top = 78
+      Width = 296
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = RgbLinePickerChange
+      Orientation = Horizontal
+      ParentBackground = False
+      TabOrder = 4
+      Kind = Blue
+    end
+  end
+  object GroupBoxAlpha: TGroupBox
+    Left = 0
+    Height = 69
+    Top = 379
+    Width = 480
+    AutoSize = True
+    Caption = 'Alpha'
+    ClientHeight = 39
+    ClientWidth = 476
+    ParentBackground = False
+    TabOrder = 3
+    object LabelAlpha: TLabel
+      AnchorSideLeft.Control = GroupBoxAlpha
+      AnchorSideTop.Control = AlphaLinePicker
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 7
+      Width = 90
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Alpha:'
+      Constraints.MaxWidth = 90
+      Constraints.MinWidth = 90
+    end
+    object AlphaLinePicker: TTurboAlphaLinePicker
+      AnchorSideLeft.Control = LabelAlpha
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = GroupBoxAlpha
+      AnchorSideRight.Control = SpinEditAlpha
+      Left = 94
+      Height = 39
+      Top = 0
+      Width = 296
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = AlphaLinePickerChange
+      Orientation = Horizontal
+      ParentBackground = False
+      TabOrder = 0
+    end
+    object SpinEditAlpha: TSpinEdit
+      AnchorSideTop.Control = AlphaLinePicker
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = GroupBoxAlpha
+      AnchorSideRight.Side = asrBottom
+      Left = 390
+      Height = 33
+      Top = 3
+      Width = 82
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      MaxValue = 255
+      TabOrder = 1
+      OnChange = SpinEditAlphaChange
+    end
+  end
+  object GroupBoxOptions: TGroupBox
+    Left = 0
+    Height = 100
+    Top = 448
+    Width = 480
+    AutoSize = True
+    Caption = 'GroupBoxOptions'
+    ClientHeight = 70
+    ClientWidth = 476
+    ParentBackground = False
+    TabOrder = 4
+    object CheckBoxAlphaModulation: TCheckBox
+      AnchorSideLeft.Control = GroupBoxOptions
+      AnchorSideTop.Control = GroupBoxOptions
+      Left = 4
+      Height = 29
+      Top = 4
+      Width = 163
+      BorderSpacing.Left = 4
+      BorderSpacing.Top = 4
+      Caption = 'AlphaModulation'
+      TabOrder = 0
+      OnChange = CheckBoxAlphaModulationChange
+    end
+    object CheckBoxColorModulation: TCheckBox
+      AnchorSideLeft.Control = GroupBoxOptions
+      AnchorSideTop.Control = CheckBoxAlphaModulation
+      AnchorSideTop.Side = asrBottom
+      Left = 4
+      Height = 29
+      Top = 37
+      Width = 277
+      BorderSpacing.Left = 4
+      BorderSpacing.Top = 4
+      BorderSpacing.Bottom = 4
+      Caption = 'ColorModulation in RGB pickers'
+      TabOrder = 1
+      OnChange = CheckBoxColorModulationChange
+    end
+  end
+end

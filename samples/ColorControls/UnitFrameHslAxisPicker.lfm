@@ -1,0 +1,412 @@
+object FrameHslAxisPicker: TFrameHslAxisPicker
+  Left = 0
+  Height = 929
+  Top = 0
+  Width = 516
+  ClientHeight = 929
+  ClientWidth = 516
+  DesignTimePPI = 144
+  LCLVersion = '4.99.0.0'
+  ParentBackground = False
+  ParentFont = False
+  TabOrder = 0
+  DesignLeft = 591
+  DesignTop = 39
+  object GroupBoxPreview: TGroupBox
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 0
+    Height = 85
+    Top = 0
+    Width = 516
+    Anchors = [akTop, akLeft, akRight]
+    AutoSize = True
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Preview'
+    ClientHeight = 55
+    ClientWidth = 512
+    ParentBackground = False
+    TabOrder = 0
+    object ColorCellPreview: TTurboColorCell
+      AnchorSideLeft.Control = GroupBoxPreview
+      AnchorSideLeft.Side = asrCenter
+      AnchorSideTop.Control = GroupBoxPreview
+      AnchorSideTop.Side = asrCenter
+      Left = 196
+      Height = 40
+      Top = 7
+      Width = 120
+      Interactive = False
+      TabOrder = 0
+    end
+  end
+  object GroupBoxRgb: TGroupBox
+    AnchorSideLeft.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = GroupBoxAlpha
+    Left = 0
+    Height = 147
+    Top = 580
+    Width = 516
+    Anchors = [akLeft, akRight, akBottom]
+    AutoSize = True
+    Caption = 'RGB'
+    ClientHeight = 117
+    ClientWidth = 512
+    ParentBackground = False
+    TabOrder = 1
+    object LabelRed: TLabel
+      AnchorSideLeft.Control = GroupBoxRgb
+      AnchorSideTop.Control = RgbLinePickerRed
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 7
+      Width = 90
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Red:'
+      Constraints.MaxWidth = 90
+      Constraints.MinWidth = 90
+    end
+    object SpinEditRed: TSpinEdit
+      AnchorSideTop.Control = RgbLinePickerRed
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = GroupBoxRgb
+      AnchorSideRight.Side = asrBottom
+      Left = 426
+      Height = 33
+      Top = 3
+      Width = 82
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      MaxValue = 255
+      TabOrder = 1
+      OnChange = SpinEditRgbChange
+    end
+    object LabelGreen: TLabel
+      AnchorSideLeft.Control = GroupBoxRgb
+      AnchorSideTop.Control = RgbLinePickerGreen
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 46
+      Width = 90
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Green:'
+      Constraints.MaxWidth = 90
+      Constraints.MinWidth = 90
+    end
+    object SpinEditGreen: TSpinEdit
+      AnchorSideTop.Control = RgbLinePickerGreen
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = GroupBoxRgb
+      AnchorSideRight.Side = asrBottom
+      Left = 426
+      Height = 33
+      Top = 42
+      Width = 82
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      MaxValue = 255
+      TabOrder = 3
+      OnChange = SpinEditRgbChange
+    end
+    object LabelBlue: TLabel
+      AnchorSideLeft.Control = GroupBoxRgb
+      AnchorSideTop.Control = RgbLinePickerBlue
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 85
+      Width = 90
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Blue:'
+      Constraints.MaxWidth = 90
+      Constraints.MinWidth = 90
+    end
+    object SpinEditBlue: TSpinEdit
+      AnchorSideTop.Control = RgbLinePickerBlue
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = GroupBoxRgb
+      AnchorSideRight.Side = asrBottom
+      Left = 426
+      Height = 33
+      Top = 81
+      Width = 82
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      MaxValue = 255
+      TabOrder = 5
+      OnChange = SpinEditRgbChange
+    end
+    object RgbLinePickerRed: TTurboRgbLinePicker
+      AnchorSideLeft.Control = LabelRed
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = GroupBoxRgb
+      AnchorSideRight.Control = SpinEditRed
+      Left = 94
+      Height = 39
+      Top = 0
+      Width = 332
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = RgbLinePickerChange
+      Orientation = Horizontal
+      ParentBackground = False
+      TabOrder = 0
+      Kind = Red
+    end
+    object RgbLinePickerGreen: TTurboRgbLinePicker
+      AnchorSideLeft.Control = LabelGreen
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = RgbLinePickerRed
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = SpinEditGreen
+      Left = 94
+      Height = 39
+      Top = 39
+      Width = 332
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = RgbLinePickerChange
+      Orientation = Horizontal
+      ParentBackground = False
+      TabOrder = 2
+      Kind = Green
+    end
+    object RgbLinePickerBlue: TTurboRgbLinePicker
+      AnchorSideLeft.Control = LabelBlue
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = RgbLinePickerGreen
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = SpinEditBlue
+      Left = 94
+      Height = 39
+      Top = 78
+      Width = 332
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = RgbLinePickerChange
+      Orientation = Horizontal
+      ParentBackground = False
+      TabOrder = 4
+      Kind = Blue
+    end
+  end
+  object GroupBoxAlpha: TGroupBox
+    AnchorSideLeft.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = GroupBoxAxisPickerOptions
+    Left = 0
+    Height = 69
+    Top = 727
+    Width = 516
+    Anchors = [akLeft, akRight, akBottom]
+    AutoSize = True
+    Caption = 'Alpha'
+    ClientHeight = 39
+    ClientWidth = 512
+    ParentBackground = False
+    TabOrder = 2
+    object LabelAlpha: TLabel
+      AnchorSideLeft.Control = GroupBoxAlpha
+      AnchorSideTop.Control = AlphaLinePicker
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 7
+      Width = 90
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Alpha:'
+      Constraints.MaxWidth = 90
+      Constraints.MinWidth = 90
+    end
+    object AlphaLinePicker: TTurboAlphaLinePicker
+      AnchorSideLeft.Control = LabelAlpha
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = GroupBoxAlpha
+      AnchorSideRight.Control = SpinEditAlpha
+      Left = 94
+      Height = 39
+      Top = 0
+      Width = 332
+      Anchors = [akTop, akLeft, akRight]
+      OnChange = AlphaLinePickerChange
+      Orientation = Horizontal
+      ParentBackground = False
+      TabOrder = 0
+    end
+    object SpinEditAlpha: TSpinEdit
+      AnchorSideTop.Control = AlphaLinePicker
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = GroupBoxAlpha
+      AnchorSideRight.Side = asrBottom
+      Left = 426
+      Height = 33
+      Top = 3
+      Width = 82
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      MaxValue = 255
+      TabOrder = 1
+      OnChange = SpinEditAlphaChange
+    end
+  end
+  object GroupBoxHsl: TGroupBox
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = GroupBoxPreview
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = GroupBoxRgb
+    Left = 0
+    Height = 495
+    Top = 85
+    Width = 516
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Caption = 'HSL'
+    ClientHeight = 465
+    ClientWidth = 512
+    ParentBackground = False
+    TabOrder = 3
+    object HslAxisPicker: TTurboHslAxisPicker
+      AnchorSideLeft.Control = GroupBoxHsl
+      AnchorSideTop.Control = GroupBoxHsl
+      AnchorSideRight.Control = HslLinePickerHue
+      AnchorSideBottom.Control = GroupBoxHsl
+      AnchorSideBottom.Side = asrBottom
+      Left = 0
+      Height = 465
+      Top = 0
+      Width = 472
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      BorderSpacing.Right = 4
+      ParentBackground = False
+      TabOrder = 0
+      VerticalReverse = True
+      OnChange = HslPickerChange
+      HorizontalKind = Saturation
+      VerticalKind = Lightness
+    end
+    object HslLinePickerHue: TTurboHslLinePicker
+      AnchorSideTop.Control = GroupBoxHsl
+      AnchorSideRight.Control = GroupBoxHsl
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Control = GroupBoxHsl
+      AnchorSideBottom.Side = asrBottom
+      Left = 476
+      Height = 465
+      Top = 0
+      Width = 36
+      Anchors = [akTop, akRight, akBottom]
+      Layout = OverlapBox
+      OnChange = HslPickerChange
+      Orientation = Vertical
+      ParentBackground = False
+      TabOrder = 1
+      Kind = Hue
+    end
+  end
+  object GroupBoxAxisPickerOptions: TGroupBox
+    AnchorSideLeft.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 0
+    Height = 133
+    Top = 796
+    Width = 516
+    Anchors = [akLeft, akRight, akBottom]
+    AutoSize = True
+    Caption = 'AxisPicker Options'
+    ClientHeight = 103
+    ClientWidth = 512
+    ParentBackground = False
+    TabOrder = 4
+    object LabelAxisPickerThumbKind: TLabel
+      AnchorSideLeft.Control = GroupBoxAxisPickerOptions
+      AnchorSideTop.Control = ComboBoxAxisPickerThumbKind
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 41
+      Width = 200
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'ThumbKind:'
+      Constraints.MinWidth = 200
+    end
+    object ComboBoxAxisPickerThumbKind: TComboBox
+      AnchorSideLeft.Control = LabelAxisPickerThumbKind
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = ComboBoxAxisPickerLayout
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = GroupBoxAxisPickerOptions
+      AnchorSideRight.Side = asrBottom
+      Left = 208
+      Height = 33
+      Top = 37
+      Width = 300
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Left = 4
+      BorderSpacing.Top = 4
+      BorderSpacing.Right = 4
+      ItemHeight = 25
+      Style = csDropDownList
+      TabOrder = 0
+      OnChange = ComboBoxAxisPickerThumbKindChange
+    end
+    object ComboBoxAxisPickerLayout: TComboBox
+      AnchorSideLeft.Control = LabelAxisPickerLayout
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = GroupBoxAxisPickerOptions
+      AnchorSideRight.Control = GroupBoxAxisPickerOptions
+      AnchorSideRight.Side = asrBottom
+      Left = 208
+      Height = 33
+      Top = 0
+      Width = 300
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Left = 4
+      BorderSpacing.Right = 4
+      ItemHeight = 25
+      Style = csDropDownList
+      TabOrder = 1
+      OnChange = ComboBoxAxisPickerLayoutChange
+    end
+    object LabelAxisPickerLayout: TLabel
+      AnchorSideLeft.Control = GroupBoxAxisPickerOptions
+      AnchorSideTop.Control = ComboBoxAxisPickerLayout
+      AnchorSideTop.Side = asrCenter
+      Left = 4
+      Height = 25
+      Top = 4
+      Width = 200
+      Alignment = taRightJustify
+      BorderSpacing.Left = 4
+      Caption = 'Layout:'
+      Constraints.MinWidth = 200
+    end
+    object CheckBoxPositionLineVisible: TCheckBox
+      AnchorSideLeft.Control = LabelAxisPickerThumbKind
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = ComboBoxAxisPickerThumbKind
+      AnchorSideTop.Side = asrBottom
+      Left = 208
+      Height = 29
+      Top = 74
+      Width = 171
+      BorderSpacing.Left = 4
+      BorderSpacing.Top = 4
+      Caption = 'PositionLineVisible'
+      TabOrder = 2
+      OnChange = CheckBoxPositionLineVisibleChange
+    end
+  end
+end
