@@ -3935,7 +3935,7 @@ begin
   Value.X := EnsureRange(Value.X, FHorizontalMin, FHorizontalMax);
   Value.Y := EnsureRange(Value.Y, FVerticalMin, FVerticalMax);
 
-  if Value.EqualsTo(GetPickerValue()) then
+  if SameValue(Value.X, GetPickerValue().X) and SameValue(Value.Y, GetPickerValue().Y) then
   begin
     exit;
   end;

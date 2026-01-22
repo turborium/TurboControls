@@ -576,9 +576,12 @@ begin
 
   HsvValue := HslLightness + Temp;
   if HsvValue = 0.0 then
+  begin
     HsvSaturation := 0.0
-  else
+  end else
+  begin
     HsvSaturation := 2.0 * (1.0 - HslLightness / HsvValue);
+  end;
 end;
 
 procedure HsvToHsl(HsvHue, HsvSaturation, HsvValue: Double; out HslHue, HslSaturation, HslLightness: Double);
@@ -587,9 +590,12 @@ begin
 
   HslLightness := HsvValue * (1 - HsvSaturation / 2);
   if (HslLightness = 0) or (HslLightness = 1) then
+  begin
     HslSaturation := 0
-  else
+  end else
+  begin
     HslSaturation := (HsvValue - HslLightness) / Min(HslLightness, 1 - HslLightness);
+  end;
 end;
 
 function BlendColor(BackgroundColor: TColor; ForegroundColor: TColor; Alpha: Byte): TColor;
@@ -1581,8 +1587,9 @@ begin
           Image.SetInternalColorProc(X, Y, FPColors[AlphaBackgroundCase(Kind, CellSize, X, Y)]);
         end;
       end;
-    finally
       Bitmap.LoadFromIntfImage(Image);
+    finally
+      Image.Free();
     end;
     Canvas.Draw(Rect.Left, Rect.Top, Bitmap);
   finally
