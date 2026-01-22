@@ -691,11 +691,13 @@ type
 
   TTurboColorLinePicker = class(TTurboCustomLinePicker)
   strict private
+    FAlphaModulation: Boolean;
     FAlphaPreview: Byte;
     FRangeBackground: TTurboTransparentBackground;
     procedure DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboLinePickerShader1D);
     procedure DrawRangeBitmap2D(Image: TLazIntfImage; Shader: TTurboLinePickerShader2D);
     procedure RangeBackgroundChange({%H-}Sender: TObject);
+    procedure SetAlphaModulation(Value: Boolean);
     procedure SetAlphaPreview(Value: Byte);
     procedure SetRangeBackground(Value: TTurboTransparentBackground);
   protected
@@ -711,6 +713,7 @@ type
     constructor Create(Owner: TComponent); override;
     destructor Destroy(); override;
     property AlphaPreview: Byte read FAlphaPreview write SetAlphaPreview default 255;
+    property AlphaModulation: Boolean read FAlphaModulation write SetAlphaModulation default True;
     property RangeBackground: TTurboTransparentBackground read FRangeBackground write SetRangeBackground;
   end;
 
@@ -730,11 +733,13 @@ type
 
   TTurboColorFloatLinePicker = class(TTurboCustomFloatLinePicker)
   strict private
+    FAlphaModulation: Boolean;
     FAlphaPreview: Byte;
     FRangeBackground: TTurboTransparentBackground;
     procedure DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboLinePickerFloatShader1D);
     procedure DrawRangeBitmap2D(Image: TLazIntfImage; Shader: TTurboLinePickerFloatShader2D);
     procedure RangeBackgroundChange({%H-}Sender: TObject);
+    procedure SetAlphaModulation(Value: Boolean);
     procedure SetAlphaPreview(Value: Byte);
     procedure SetRangeBackground(Value: TTurboTransparentBackground);
   protected
@@ -750,6 +755,7 @@ type
     constructor Create(Owner: TComponent); override;
     destructor Destroy(); override;
     property AlphaPreview: Byte read FAlphaPreview write SetAlphaPreview default 255;
+    property AlphaModulation: Boolean read FAlphaModulation write SetAlphaModulation default True;
     property RangeBackground: TTurboTransparentBackground read FRangeBackground write SetRangeBackground;
   end;
 
@@ -765,10 +771,12 @@ type
 
   TTurboColorAxisPicker = class(TTurboCustomAxisPicker)
   private
+    FAlphaModulation: Boolean;
     FAlphaPreview: Byte;
     FRangeBackground: TTurboTransparentBackground;
     procedure DrawRangeBitmap(Image: TLazIntfImage; Shader: TTurboAxisPickerShader);
     procedure RangeBackgroundChange({%H-}Sender: TObject);
+    procedure SetAlphaModulation(Value: Boolean);
     procedure SetAlphaPreview(Value: Byte);
     procedure SetRangeBackground(Value: TTurboTransparentBackground);
   protected
@@ -785,6 +793,7 @@ type
     constructor Create(Owner: TComponent); override;
     destructor Destroy(); override;
     property AlphaPreview: Byte read FAlphaPreview write SetAlphaPreview default 255;
+    property AlphaModulation: Boolean read FAlphaModulation write SetAlphaModulation default True;
     property RangeBackground: TTurboTransparentBackground read FRangeBackground write SetRangeBackground;
   end;
 
@@ -800,10 +809,12 @@ type
 
   TTurboColorFloatAxisPicker = class(TTurboCustomFloatAxisPicker)
   private
+    FAlphaModulation: Boolean;
     FAlphaPreview: Byte;
     FRangeBackground: TTurboTransparentBackground;
     procedure DrawRangeBitmap(Image: TLazIntfImage; Shader: TTurboAxisPickerFloatShader);
     procedure RangeBackgroundChange({%H-}Sender: TObject);
+    procedure SetAlphaModulation(Value: Boolean);
     procedure SetAlphaPreview(Value: Byte);
     procedure SetRangeBackground(Value: TTurboTransparentBackground);
   protected
@@ -820,6 +831,7 @@ type
     constructor Create(Owner: TComponent); override;
     destructor Destroy(); override;
     property AlphaPreview: Byte read FAlphaPreview write SetAlphaPreview default 255;
+    property AlphaModulation: Boolean read FAlphaModulation write SetAlphaModulation default True;
     property RangeBackground: TTurboTransparentBackground read FRangeBackground write SetRangeBackground;
   end;
 
@@ -889,12 +901,13 @@ type
     procedure SetRgb(Red, Green, Blue: Byte);
   published
     property AlphaPreview;
+    property AlphaModulation;
     property ColorModulation: Boolean read FColorModulation write SetColorModulation stored IsColorModulationStored;
     property CurrentColor: TColor read GetCurrentColor write SetCurrentColor stored False nodefault;
     property Hue: Double read FHue write SetHue stored IsHueStored;
     property Kind: TTurboHslLinePickerKind read FKind write SetKind;
     property Lightness: Double read FLightness write SetLightness stored IsLightnessStored;
-    property PreviewStyle: TTurboHslLinePickerPreviewStyle read FPreviewStyle write SetPreviewStyle;
+    property PreviewStyle: TTurboHslLinePickerPreviewStyle read FPreviewStyle write SetPreviewStyle default TTurboHslLinePickerPreviewStyle.RedGreenBlueGradient;
     property RangeBackground;
     property Saturation: Double read FSaturation write SetSaturation stored IsSaturationStored;
   end;
@@ -961,11 +974,12 @@ type
     procedure SetRgb(Red, Green, Blue: Byte);
   published
     property AlphaPreview;
+    property AlphaModulation;
     property ColorModulation: Boolean read FColorModulation write SetColorModulation stored IsColorModulationStored;
     property CurrentColor: TColor read GetCurrentColor write SetCurrentColor stored False nodefault;
     property Hue: Double read FHue write SetHue stored IsHueStored;
     property Kind: TTurboHsvLinePickerKind read FKind write SetKind;
-    property PreviewStyle: TTurboHsvLinePickerPreviewStyle read FPreviewStyle write SetPreviewStyle;
+    property PreviewStyle: TTurboHsvLinePickerPreviewStyle read FPreviewStyle write SetPreviewStyle default TTurboHsvLinePickerPreviewStyle.RedGreenBlueGradient;
     property RangeBackground;
     property Saturation: Double read FSaturation write SetSaturation stored IsSaturationStored;
     property Value: Double read FValue write SetValue stored IsValueStored;
@@ -1017,6 +1031,7 @@ type
     procedure SetRgb(Red, Green, Blue: Byte);
   published
     property AlphaPreview;
+    property AlphaModulation;
     property Blue: Byte read FBlue write SetBlue default 127;
     property ColorModulation: Boolean read FColorModulation write SetColorModulation default True;
     property CurrentColor: TColor read GetCurrentColor write SetCurrentColor stored False nodefault;
@@ -1120,6 +1135,7 @@ type
     procedure SetRgb(Red, Green, Blue: Byte);
   published
     property AlphaPreview;
+    property AlphaModulation;
     property CurrentColor: TColor read GetCurrentColor write SetCurrentColor stored False nodefault;
     property HorizontalKind: TTurboHslAxisPickerKind read FHorizontalKind write SetHorizontalKind;
     property Hue: Double read FHue write SetHue stored IsHueStored;
@@ -1176,6 +1192,7 @@ type
     procedure SetRgb(Red, Green, Blue: Byte);
   published
     property AlphaPreview;
+    property AlphaModulation;
     property CurrentColor: TColor read GetCurrentColor write SetCurrentColor stored False nodefault;
     property HorizontalKind: TTurboHsvAxisPickerKind read FHorizontalKind write SetHorizontalKind;
     property Hue: Double read FHue write SetHue stored IsHueStored;
@@ -1229,6 +1246,7 @@ type
     procedure SetRgb(Red, Green, Blue: Byte);
   published
     property AlphaPreview;
+    property AlphaModulation;
     property Blue: Byte read FBlue write SetBlue default 127;
     property CurrentColor: TColor read GetCurrentColor write SetCurrentColor stored False nodefault;
     property Green: Byte read FGreen write SetGreen default 127;
@@ -1268,7 +1286,7 @@ type
   published
     property AlphaPreview: Byte read FAlphaPreview write SetAlphaPreview default 255;
     property Background: TTurboTransparentBackground read FBackground write SetBackground;
-    property ForceRepaint: Boolean read FForceRepaint write FForceRepaint default False;
+    property ForceRepaint: Boolean read FForceRepaint write FForceRepaint default True;
     property Value: TColor read FValue write SetValue default $007F7F7F;
   end;
 
@@ -4356,6 +4374,7 @@ begin
   FRangeBackground.OnChange := RangeBackgroundChange;
 
   FAlphaPreview := 255;
+  FAlphaModulation := True;
 end;
 
 destructor TTurboColorLinePicker.Destroy();
@@ -4585,6 +4604,17 @@ begin
   PickerInvalidate(True);
 end;
 
+procedure TTurboColorLinePicker.SetAlphaModulation(Value: Boolean);
+begin
+  if FAlphaModulation = Value then
+  begin
+    exit;
+  end;
+
+  FAlphaModulation := Value;
+  PickerInvalidate(True);
+end;
+
 procedure TTurboColorLinePicker.SetAlphaPreview(Value: Byte);
 begin
   if FAlphaPreview = Value then
@@ -4644,7 +4674,13 @@ end;
 
 function TTurboColorLinePicker.GetPickerRangeOpacity(): Byte;
 begin
-  Result := FAlphaPreview;
+  if FAlphaModulation then
+  begin
+    Result := FAlphaPreview;
+  end else
+  begin
+    Result := 255;
+  end;
 end;
 
 function TTurboColorLinePicker.GetPickerRangeShader1D(): TTurboLinePickerShader1D;
@@ -4667,6 +4703,7 @@ begin
   FRangeBackground.OnChange := RangeBackgroundChange;
 
   FAlphaPreview := 255;
+  FAlphaModulation := True;
 end;
 
 destructor TTurboColorFloatLinePicker.Destroy();
@@ -4890,6 +4927,17 @@ begin
   PickerInvalidate(True);
 end;
 
+procedure TTurboColorFloatLinePicker.SetAlphaModulation(Value: Boolean);
+begin
+  if FAlphaModulation = Value then
+  begin
+    exit;
+  end;
+
+  FAlphaModulation := Value;
+  PickerInvalidate(True);
+end;
+
 procedure TTurboColorFloatLinePicker.SetAlphaPreview(Value: Byte);
 begin
   if FAlphaPreview = Value then
@@ -4908,7 +4956,13 @@ end;
 
 function TTurboColorFloatLinePicker.GetPickerRangeOpacity(): Byte;
 begin
-  Result := FAlphaPreview;
+  if FAlphaModulation then
+  begin
+    Result := FAlphaPreview;
+  end else
+  begin
+    Result := 255;
+  end;
 end;
 
 procedure TTurboColorFloatLinePicker.PaintRangeBitmap(Bitmap: TBitmap);
@@ -4972,6 +5026,7 @@ begin
   FRangeBackground.OnChange := RangeBackgroundChange;
 
   FAlphaPreview := 255;
+  FAlphaModulation := True;
 end;
 
 destructor TTurboColorAxisPicker.Destroy();
@@ -5064,6 +5119,17 @@ begin
   PickerInvalidate(True);
 end;
 
+procedure TTurboColorAxisPicker.SetAlphaModulation(Value: Boolean);
+begin
+  if FAlphaModulation = Value then
+  begin
+    exit;
+  end;
+
+  FAlphaModulation := Value;
+  PickerInvalidate(True);
+end;
+
 procedure TTurboColorAxisPicker.SetAlphaPreview(Value: Byte);
 begin
   if FAlphaPreview = Value then
@@ -5125,7 +5191,13 @@ end;
 
 function TTurboColorAxisPicker.GetPickerRangeOpacity(): Byte;
 begin
-  Result := FAlphaPreview;
+  if FAlphaModulation then
+  begin
+    Result := FAlphaPreview;
+  end else
+  begin
+    Result := 255;
+  end;
 end;
 
 function TTurboColorAxisPicker.GetPickerRangeShader(): TTurboAxisPickerShader;
@@ -5143,6 +5215,7 @@ begin
   FRangeBackground.OnChange := RangeBackgroundChange;
 
   FAlphaPreview := 255;
+  FAlphaModulation := True;
 end;
 
 destructor TTurboColorFloatAxisPicker.Destroy();
@@ -5235,6 +5308,17 @@ begin
   PickerInvalidate(True);
 end;
 
+procedure TTurboColorFloatAxisPicker.SetAlphaModulation(Value: Boolean);
+begin
+  if FAlphaModulation = Value then
+  begin
+    exit;
+  end;
+
+  FAlphaModulation := Value;
+  PickerInvalidate(True);
+end;
+
 procedure TTurboColorFloatAxisPicker.SetAlphaPreview(Value: Byte);
 begin
   if FAlphaPreview = Value then
@@ -5296,7 +5380,13 @@ end;
 
 function TTurboColorFloatAxisPicker.GetPickerRangeOpacity(): Byte;
 begin
-  Result := FAlphaPreview;
+  if FAlphaModulation then
+  begin
+    Result := FAlphaPreview;
+  end else
+  begin
+    Result := 255;
+  end;
 end;
 
 function TTurboColorFloatAxisPicker.GetPickerRangeShader(): TTurboAxisPickerFloatShader;
@@ -7735,7 +7825,7 @@ begin
 
   FAlphaPreview := 255;
   FValue := $007F7F7F;
-  FForceRepaint := False;
+  FForceRepaint := True;
 end;
 
 destructor TTurboColorCell.Destroy();
