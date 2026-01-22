@@ -39,6 +39,9 @@ Quick steps to install and use `TurboControls` in Lazarus:
 
 After installation, the components will appear in the `TurboControls` palette group.
 
+## Samples
+[ColorControls sample](samples/ColorControls/readme.md) - This sample demonstrates TurboControls color picker components and how they work together.
+
 ## Controls
 
 ### TTurboColorCell
