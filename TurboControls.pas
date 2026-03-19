@@ -929,6 +929,8 @@ end;
 
 constructor TTurboTransparentBackground.Create();
 begin
+  inherited Create();
+  
   FKind := TTurboTransparentBackgroundKind.Chess;
   FCellSize := 4;
   FColor1 := clGray;
