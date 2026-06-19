@@ -4252,6 +4252,8 @@ begin
   begin
     DrawSelectionFrame(Canvas, Rect, FSelection.Color1, FSelection.Color2, FSelection.HotOpacity);
   end;
+
+  inherited Paint();
 end;
 
 function TTurboCustomCell.IsAllowFocus(): Boolean;
@@ -4352,14 +4354,14 @@ end;
 
 procedure TTurboCustomCell.WMSetFocus(var Message: TLMSetFocus);
 begin
-  Inherited;
+  inherited;
 
   Invalidate();
 end;
 
 procedure TTurboCustomCell.WMKillFocus(var Message: TLMKillFocus);
 begin
-  Inherited;
+  inherited;
 
   Invalidate();
 end;
