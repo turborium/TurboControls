@@ -28,7 +28,7 @@ interface
 
 uses
   Classes, SysUtils, Types, Graphics, Controls, IntfGraphics, LCLIntf,
-  LCLType, FpImage, Math, GraphType, TurboControls, Themes, TurboExternalGraphics;
+  LCLType, FpImage, Math, GraphType, TurboControls, Themes, LMessages, TurboExternalGraphics;
 
 type
   // ###################################################################################################################
@@ -599,10 +599,10 @@ type
     procedure SetFocusStyle(Value: TTurboCellFocusStyle);
     procedure SetSelected(Value: Boolean);
     procedure SetSelection(Value: TTurboSelectionFrame);
+    procedure WMSetFocus(var Message: TLMSetFocus); message LM_SETFOCUS;
+    procedure WMKillFocus(var Message: TLMKillFocus); message LM_KILLFOCUS;
   protected
     class function GetControlClassDefaultSize(): TSize; override;
-    procedure DoEnter(); override;
-    procedure DoExit(); override;
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
     procedure KeyUp(var Key: Word; Shift: TShiftState); override;
     procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
@@ -4129,20 +4129,6 @@ begin
   Result := TSize.Create(32, 32);
 end;
 
-procedure TTurboCustomCell.DoEnter();
-begin
-  inherited DoEnter();
-
-  Invalidate();
-end;
-
-procedure TTurboCustomCell.DoExit();
-begin
-  inherited DoExit();
-
-  Invalidate();
-end;
-
 procedure TTurboCustomCell.KeyDown(var Key: Word; Shift: TShiftState);
 begin
   if (not FIsDown) and (Key in [VK_RETURN, VK_SPACE]) then
@@ -4362,6 +4348,20 @@ end;
 procedure TTurboCustomCell.SetSelection(Value: TTurboSelectionFrame);
 begin
   FSelection.Assign(Value);
+end;
+
+procedure TTurboCustomCell.WMSetFocus(var Message: TLMSetFocus);
+begin
+  Inherited;
+
+  Invalidate();
+end;
+
+procedure TTurboCustomCell.WMKillFocus(var Message: TLMKillFocus);
+begin
+  Inherited;
+
+  Invalidate();
 end;
 
 { TTurboColorLinePicker }
@@ -7958,4 +7958,3 @@ begin
 end;
 
 end.
-
