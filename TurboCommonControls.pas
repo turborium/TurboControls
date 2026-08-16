@@ -50,7 +50,7 @@ type
     procedure ScrollBy(DeltaX, DeltaY: Integer); override;
 
   published
-    property ImmediateScrollUpdate: Boolean read FImmediateScrollUpdate write FImmediateScrollUpdate default True;
+    property ImmediateScrollUpdate: Boolean read FImmediateScrollUpdate write FImmediateScrollUpdate default False;
     property OnScroll: TTurboScrollEvent read FScrollEvent write FScrollEvent;
   end;
 
@@ -62,7 +62,7 @@ constructor TTurboScrollBox.Create(Owner: TComponent);
 begin
   inherited Create(Owner);
 
-  FImmediateScrollUpdate := True;
+  FImmediateScrollUpdate := False;
 end;
 
 procedure TTurboScrollBox.WMHScroll(var Message: TLMHScroll);

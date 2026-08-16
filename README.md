@@ -239,6 +239,21 @@ A 2D HSV axis picker for selecting two color components at once
 (for example: Saturation \* Value).
 
 ![TTurboHsvAxisPicker](images/TTurboHsvAxisPicker.gif)
+ 
+---
+
+### TTurboScrollBox
+
+![TTurboScrollBox](icons/TTurboScrollBox_200.png)
+
+A descendant of `TScrollBox` with immediate visual updates after scrolling and an `OnScroll` event.
+
+**Main properties:**
+
+- `ImmediateScrollUpdate`: Enables immediate visual updates after scrolling.
+- `OnScroll`: Event triggered when the scroll position changes.
+
+---
 
 **Main properties:**
 - `HorizontalKind`: Which channel maps to the horizontal axis (`Hue`, `Saturation`, `Value`).
