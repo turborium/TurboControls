@@ -27,7 +27,7 @@ unit TurboControlsRegister;
 interface
 
 uses
-  Classes, SysUtils, TurboPickers;
+  Classes, SysUtils, TurboPickers, TurboCommonControls;
 
 {$R 'icons.rc' 'icons.res'}
 
@@ -45,7 +45,8 @@ begin
     TTurboHslLinePicker,
     TTurboHslAxisPicker,
     TTurboHsvLinePicker,
-    TTurboHsvAxisPicker
+    TTurboHsvAxisPicker,
+    TTurboScrollBox
   ]);
 end;
 

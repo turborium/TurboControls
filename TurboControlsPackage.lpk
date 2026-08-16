@@ -44,6 +44,10 @@ Users may obtain a commercial version of this software without the requirement t
         <HasRegisterProc Value="True"/>
         <UnitName Value="TurboControlsRegister"/>
       </Item>
+      <Item>
+        <Filename Value="TurboCommonControls.pas"/>
+        <UnitName Value="TurboCommonControls"/>
+      </Item>
     </Files>
     <RequiredPkgs>
       <Item>
