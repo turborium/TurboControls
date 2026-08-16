@@ -27,7 +27,7 @@ unit TurboControls;
 interface
 
 uses
-  Classes, Math, SysUtils, Graphics, Controls, TurboExternalGraphics;
+  Classes, Math, SysUtils, Graphics, Controls, LMessages, TurboExternalGraphics;
 
 type
 
@@ -231,7 +231,9 @@ type
 
   TTurboCustomControl = class(TCustomControl)
   private
+    FOnCancelMode: TNotifyEvent;
     procedure UpdateOpaque();
+    procedure WMCancelMode(var Message: TLMessage); message LM_CANCELMODE;
   protected
     property ParentBackground default True;
     procedure SetParentBackground(const ParentBackground: Boolean); override;
@@ -240,6 +242,7 @@ type
     constructor Create(Owner: TComponent); override;
     function CanFocus(): Boolean; override;
     procedure TrySetFocus();
+    property OnCancelMode: TNotifyEvent read FOnCancelMode write FOnCancelMode;
   end;
 
   { TTurboTransparentBackground }
@@ -911,6 +914,15 @@ begin
     ControlStyle := ControlStyle - [csOpaque]
   else
     ControlStyle := ControlStyle + [csOpaque];
+end;
+
+procedure TTurboCustomControl.WMCancelMode(var Message: TLMessage);
+begin
+  inherited;
+  if Assigned(FOnCancelMode) then
+  begin
+    FOnCancelMode(Self);
+  end;
 end;
 
 procedure TTurboCustomControl.SetParentBackground(const ParentBackground: Boolean);
