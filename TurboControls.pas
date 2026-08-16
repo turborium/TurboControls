@@ -919,6 +919,7 @@ end;
 procedure TTurboCustomControl.WMCancelMode(var Message: TLMessage);
 begin
   inherited;
+
   if Assigned(FOnCancelMode) then
   begin
     FOnCancelMode(Self);

@@ -27,8 +27,8 @@ unit TurboPickers;
 interface
 
 uses
-  Classes, SysUtils, Types, Graphics, Controls, IntfGraphics, LCLIntf,
-  LCLType, FpImage, Math, GraphType, TurboControls, Themes, LMessages, TurboExternalGraphics;
+  Classes, SysUtils, Types, Math, Graphics, Controls, IntfGraphics, LCLIntf,
+  LCLType, FpImage, LMessages, TurboControls, TurboExternalGraphics;
 
 type
   // ###################################################################################################################
