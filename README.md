@@ -271,3 +271,15 @@ A descendant of `TScrollBox` with immediate visual updates after scrolling and a
 - `OnScroll`: Event triggered when the scroll position changes.
 
 ---
+
+### TTurboDropDownButton
+
+![TTurboDropDownButton](icons/TTurboDropDownButton_200.png)
+
+A descendant of `TButton` with ability to show Drop Down Menu at Click.
+
+**Main properties:**
+
+- `DropDownMenu`: Popup Menu associated with this Button.
+
+---
