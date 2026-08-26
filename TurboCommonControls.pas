@@ -27,7 +27,7 @@ unit TurboCommonControls;
 interface
 
 uses
-  Classes, SysUtils, Forms, LCLIntf, LMessages;
+  Classes, SysUtils, Forms, LCLIntf, LMessages, StdCtrls, Menus, Controls;
 
 type
 
@@ -46,12 +46,27 @@ type
     procedure WMVScroll(var Message: TLMVScroll); message LM_VSCROLL;
   public
     constructor Create(Owner: TComponent); override;
-
     procedure ScrollBy(DeltaX, DeltaY: Integer); override;
-
   published
     property ImmediateScrollUpdate: Boolean read FImmediateScrollUpdate write FImmediateScrollUpdate default False;
     property OnScroll: TTurboScrollEvent read FScrollEvent write FScrollEvent;
+  end;
+
+  { TTurboDropDownButton }
+
+  TTurboDropDownButton = class(TButton)
+  private
+    FDropDownMenu: TPopupMenu;
+    FLastDropDownTick: QWord;
+    procedure SetDropDownMenu(Value: TPopupMenu);
+  protected
+    procedure Notification(Component: TComponent; Operation: TOperation); override;
+    procedure KeyDown(var Key: Word; Shift: TShiftState); override;
+    procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
+  public
+    procedure Click(); override;
+  published
+    property DropDownMenu: TPopupMenu read FDropDownMenu write SetDropDownMenu;
   end;
 
 implementation
@@ -95,6 +110,88 @@ begin
     UpdateWindow(Handle);
   end;
   {$ENDIF}
+end;
+
+{ TTurboDropDownButton }
+
+procedure TTurboDropDownButton.SetDropDownMenu(Value: TPopupMenu);
+begin
+  if FDropDownMenu <> Value then
+  begin
+    if FDropDownMenu <> nil then
+    begin
+      FDropDownMenu.RemoveFreeNotification(Self);
+    end;
+
+    FDropDownMenu := Value;
+
+    if FDropDownMenu <> nil then
+    begin
+      FDropDownMenu.FreeNotification(Self);
+    end;
+  end;
+end;
+
+procedure TTurboDropDownButton.Notification(Component: TComponent; Operation: TOperation);
+begin
+  inherited Notification(Component, Operation);
+
+  if Operation = opRemove then
+  begin
+    if Component = FDropDownMenu then
+    begin
+      FDropDownMenu := nil
+    end;
+  end;
+end;
+
+procedure TTurboDropDownButton.KeyDown(var Key: Word; Shift: TShiftState);
+begin
+  if GetTickCount64() >= FLastDropDownTick then
+  begin
+    FLastDropDownTick := 0;
+  end;
+
+  inherited KeyDown(Key, Shift);
+end;
+
+procedure TTurboDropDownButton.MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  if GetTickCount64() >= FLastDropDownTick then
+  begin
+    FLastDropDownTick := 0;
+  end;
+
+  inherited MouseDown(Button, Shift, X, Y);
+end;
+
+procedure TTurboDropDownButton.Click();
+var
+  Point: TPoint;
+begin
+  // ignore too early click
+  if FLastDropDownTick <> 0 then
+  begin
+    FLastDropDownTick := 0;
+    inherited Click();
+    exit;
+  end;
+
+  // show PopUp
+  if FDropDownMenu <> nil then
+  begin
+    FDropDownMenu.PopupComponent := Self;
+    Point := ClientToScreen(TPoint.Create(0, Height));
+    FDropDownMenu.PopUp(Point.X, Point.Y);
+  end;
+
+  // MUSTDIE HACK:
+  // TrackPopupMenuEx uses its own modal menu tracking.
+  // After it returns, the next Click on the button may be either the click that closed the popup
+  // or a new click. These cases are indistinguishable, so ignore Click briefly.
+  FLastDropDownTick := GetTickCount64() + 100;
+
+  inherited Click();
 end;
 
 end.

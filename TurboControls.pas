@@ -27,7 +27,7 @@ unit TurboControls;
 interface
 
 uses
-  Classes, Math, SysUtils, Graphics, Controls, LMessages, TurboExternalGraphics;
+  Classes, Math, SysUtils, Graphics, Controls, LMessages, Forms, TurboExternalGraphics;
 
 type
 
@@ -298,7 +298,19 @@ type
     property PressedOpacity: Byte read FPressedOpacity write SetPressedOpacity default 200;
   end;
 
+procedure CreateFrame(Owner: TComponent; FrameClass: TCustomFrameClass; out Frame: TCustomFrame);
+
 implementation
+
+procedure CreateFrame(Owner: TComponent; FrameClass: TCustomFrameClass; out Frame: TCustomFrame);
+begin
+  Frame := FrameClass.Create(Owner);
+
+  if Application.Scaled and Frame.Scaled then
+  begin
+    Frame.FixDesignFontsPPIWithChildren(Frame.DesignTimePPI);
+  end;
+end;
 
 { TTurboPadding }
 
