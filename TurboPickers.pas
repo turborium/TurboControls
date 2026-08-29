@@ -130,13 +130,14 @@ type
     procedure PaintRangeBitmap(Bitmap: TBitmap); virtual; abstract;
     procedure PickerChanged();
     procedure PickerInvalidate(NeedUpdateRangeBitmap: Boolean);
-    procedure PickerRepaint(NeedUpdateRangeBitmap: Boolean);
     procedure PickerUserChanged();
+    procedure PickerRepaint(NeedUpdateRangeBitmap: Boolean);
     procedure SetPickerAbsolutePosition(Width, Position: Integer); virtual; abstract;
   public
     constructor Create(Owner: TComponent); override;
     destructor Destroy(); override;
     procedure AutoAdjustLayout(Mode: TLayoutAdjustmentPolicy; const FromPPI, ToPPI, OldFormWidth, NewFormWidth: Integer); override;
+    procedure Redraw(NeedUpdateRangeBitmap: Boolean);
   published
     property Align;
     property AllowFocus: Boolean read FAllowFocus write FAllowFocus default True;
@@ -377,13 +378,14 @@ type
     procedure PaintRangeBitmap(Bitmap: TBitmap); virtual; abstract;
     procedure PickerChanged();
     procedure PickerInvalidate(NeedUpdateRangeBitmap: Boolean);
-    procedure PickerRepaint(NeedUpdateRangeBitmap: Boolean);
     procedure PickerUserChanged();
+    procedure PickerRepaint(NeedUpdateRangeBitmap: Boolean);
     procedure SetPickerAbsolutePosition(Size: TSize; Position: TPoint); virtual; abstract;
   public
     constructor Create(Owner: TComponent); override;
     destructor Destroy(); override;
-    procedure AutoAdjustLayout(Mode: TLayoutAdjustmentPolicy; const FromPPI, ToPPI, OldFormWidth, NewFormWidth: Integer); override;// ok
+    procedure AutoAdjustLayout(Mode: TLayoutAdjustmentPolicy; const FromPPI, ToPPI, OldFormWidth, NewFormWidth: Integer); override;
+    procedure Redraw(NeedUpdateRangeBitmap: Boolean);
   published
     property Align;
     property AllowFocus: Boolean read FAllowFocus write FAllowFocus default True;
@@ -843,10 +845,15 @@ type
   // TTurboFloatLinePicker
   // ===================================================================================================================
 
+  { TTurboPickerGetFloatShader1D }
+
+  TTurboPickerGetFloatShader1D = procedure(Sender: TObject; var Shader: TTurboPickerFloatShader1D) of object;
+
   { TTurboFloatLinePicker }
 
   TTurboFloatLinePicker = class(TTurboColorFloatLinePicker)
   strict private
+    FOnGetShader: TTurboPickerGetFloatShader1D;
     FOnShader: TTurboPickerFloatShader1D;
     FValue: Double;
     function DefaultShader1D(Value: Double): TTurboColor;
@@ -868,6 +875,7 @@ type
     property RangeBackground;
     property Value: Double read FValue write SetValueProperty stored IsValueStored;
     property OnShader: TTurboPickerFloatShader1D read FOnShader write FOnShader;
+    property OnGetShader: TTurboPickerGetFloatShader1D read FOnGetShader write FOnGetShader;
   end;
 
   // ===================================================================================================================
@@ -1020,10 +1028,15 @@ type
   // TTurboLinePicker
   // ===================================================================================================================
 
+  {TTurboPickerGetShader1D}
+
+  TTurboPickerGetShader1D = procedure(Sender: TObject; var Shader: TTurboPickerShader1D) of object;
+
   { TTurboLinePicker }
 
   TTurboLinePicker = class(TTurboColorLinePicker)
   strict private
+    FOnGetShader: TTurboPickerGetShader1D;
     FOnShader: TTurboPickerShader1D;
     FValue: Integer;
     function DefaultShader1D(Value: Integer): TTurboColor;
@@ -1044,6 +1057,7 @@ type
     property RangeBackground;
     property Value: Integer read FValue write SetValueProperty default 0;
     property OnShader: TTurboPickerShader1D read FOnShader write FOnShader;
+    property OnGetShader: TTurboPickerGetShader1D read FOnGetShader write FOnGetShader;
   end;
 
   // ===================================================================================================================
@@ -1153,10 +1167,13 @@ type
   // TTurboFloatAxisPicker
   // ===================================================================================================================
 
+  TTurboPickerGetFloatShader2D = procedure(Sender: TObject; var Shader: TTurboPickerFloatShader2D) of object;
+
   { TTurboFloatAxisPicker }
 
   TTurboFloatAxisPicker = class(TTurboColorFloatAxisPicker)
   strict private
+    FOnGetShader: TTurboPickerGetFloatShader2D;
     FOnShader: TTurboPickerFloatShader2D;
     FValueX: Double;
     FValueY: Double;
@@ -1181,6 +1198,7 @@ type
     property AlphaModulation;
     property AlphaPreview;
     property OnShader: TTurboPickerFloatShader2D read FOnShader write FOnShader;
+    property OnGetShader: TTurboPickerGetFloatShader2D read FOnGetShader write FOnGetShader;
     property RangeBackground;
     property ValueX: Double read FValueX write SetValueX stored IsValueXStored;
     property ValueY: Double read FValueY write SetValueY stored IsValueYStored;
@@ -1304,10 +1322,15 @@ type
   // TTurboAxisPicker
   // ===================================================================================================================
 
+  { TTurboPickerGetShader2D }
+
+  TTurboPickerGetShader2D = procedure(Sender: TObject; var Shader: TTurboPickerShader2D) of object;
+
   { TTurboAxisPicker }
 
   TTurboAxisPicker = class(TTurboColorAxisPicker)
   strict private
+    FOnGetShader: TTurboPickerGetShader2D;
     FOnShader: TTurboPickerShader2D;
     FValueX: Integer;
     FValueY: Integer;
@@ -1330,6 +1353,7 @@ type
     property AlphaModulation;
     property AlphaPreview;
     property OnShader: TTurboPickerShader2D read FOnShader write FOnShader;
+    property OnGetShader: TTurboPickerGetShader2D read FOnGetShader write FOnGetShader;
     property RangeBackground;
     property ValueX: Integer read FValueX write SetValueX;
     property ValueY: Integer read FValueY write SetValueY;
@@ -2304,6 +2328,11 @@ begin
   FRangePadding.Bottom := MulDiv(FRangePadding.Bottom, ToPPI, FromPPI);
 end;
 
+procedure TTurboAbstractLinePicker.Redraw(NeedUpdateRangeBitmap: Boolean);
+begin
+  PickerRepaint(NeedUpdateRangeBitmap);
+end;
+
 function TTurboAbstractLinePicker.DoMouseWheel(Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint): Boolean;
 var
   Delta: Integer;
@@ -2534,7 +2563,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -2555,7 +2584,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -2740,7 +2769,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -2761,7 +2790,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -3524,6 +3553,11 @@ begin
   end;
 end;
 
+procedure TTurboAbstractAxisPicker.Redraw(NeedUpdateRangeBitmap: Boolean);
+begin
+  PickerRepaint(NeedUpdateRangeBitmap);
+end;
+
 procedure TTurboAbstractAxisPicker.PickerUserChanged();
 begin
   if Assigned(FOnUserChange) and not(csLoading in ComponentState) then
@@ -3621,7 +3655,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -3642,7 +3676,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -3693,7 +3727,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -3714,7 +3748,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -3966,7 +4000,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -3987,7 +4021,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -4038,7 +4072,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -4059,7 +4093,7 @@ begin
     PickerChange(True);
   end else
   begin
-    PickerRepaint(True);
+    PickerInvalidate(True);
   end;
 end;
 
@@ -5583,10 +5617,19 @@ end;
 
 function TTurboFloatLinePicker.GetPickerRangeShader1D(): TTurboPickerFloatShader1D;
 begin
+  Result := nil;
+
   if Assigned(FOnShader) then
   begin
     Result := FOnShader;
-  end else
+  end;
+
+  if Assigned(FOnGetShader) then
+  begin
+    FOnGetShader(Self, Result);
+  end;
+
+  if not Assigned(Result) then
   begin
     Result := DefaultShader1D;
   end;
@@ -5614,10 +5657,14 @@ end;
 
 procedure TTurboFloatLinePicker.SetValue(Value: Double; NeedUpdateRangeBitmap: Boolean);
 begin
-  if (Value <> FValue) or NeedUpdateRangeBitmap then
+  if Value <> FValue then
   begin
     FValue := Value;
     PickerChange(NeedUpdateRangeBitmap);
+  end else
+  if NeedUpdateRangeBitmap then
+  begin
+    PickerRepaint(NeedUpdateRangeBitmap);
   end;
 end;
 
@@ -6656,10 +6703,19 @@ end;
 
 function TTurboLinePicker.GetPickerRangeShader1D(): TTurboPickerShader1D;
 begin
+  Result := nil;
+
   if Assigned(FOnShader) then
   begin
     Result := FOnShader;
-  end else
+  end;
+
+  if Assigned(FOnGetShader) then
+  begin
+    FOnGetShader(Self, Result);
+  end;
+
+  if not Assigned(Result) then
   begin
     Result := DefaultShader1D;
   end;
@@ -6687,10 +6743,14 @@ end;
 
 procedure TTurboLinePicker.SetValue(Value: Integer; NeedUpdateRangeBitmap: Boolean);
 begin
-  if (Value <> FValue) or NeedUpdateRangeBitmap then
+  if Value <> FValue then
   begin
     FValue := Value;
     PickerChange(NeedUpdateRangeBitmap);
+  end else
+  if NeedUpdateRangeBitmap then
+  begin
+    PickerRepaint(NeedUpdateRangeBitmap);
   end;
 end;
 
@@ -7290,10 +7350,19 @@ end;
 
 function TTurboFloatAxisPicker.GetPickerRangeShader(): TTurboPickerFloatShader2D;
 begin
+  Result := nil;
+
   if Assigned(FOnShader) then
   begin
     Result := FOnShader;
-  end else
+  end;
+
+  if Assigned(FOnGetShader) then
+  begin
+    FOnGetShader(Self, Result);
+  end;
+
+  if not Assigned(Result) then
   begin
     Result := DefaultShader;
   end;
@@ -7322,11 +7391,15 @@ end;
 
 procedure TTurboFloatAxisPicker.SetValue(ValueX, ValueY: Double; NeedUpdateRangeBitmap: Boolean);
 begin
-  if (ValueX <> FValueX) or (ValueY <> FValueY) or NeedUpdateRangeBitmap then
+  if (ValueX <> FValueX) or (ValueY <> FValueY) then
   begin
     FValueX := ValueX;
     FValueY := ValueY;
     PickerChange(NeedUpdateRangeBitmap);
+  end else
+  if NeedUpdateRangeBitmap then
+  begin
+    PickerRepaint(NeedUpdateRangeBitmap);
   end;
 end;
 
@@ -8080,10 +8153,19 @@ end;
 
 function TTurboAxisPicker.GetPickerRangeShader(): TTurboPickerShader2D;
 begin
+  Result := nil;
+
   if Assigned(FOnShader) then
   begin
     Result := FOnShader;
-  end else
+  end;
+
+  if Assigned(FOnGetShader) then
+  begin
+    FOnGetShader(Self, Result);
+  end;
+
+  if not Assigned(Result) then
   begin
     Result := DefaultShader;
   end;
@@ -8112,11 +8194,15 @@ end;
 
 procedure TTurboAxisPicker.SetValue(ValueX, ValueY: Integer; NeedUpdateRangeBitmap: Boolean);
 begin
-  if (ValueX <> FValueX) or (ValueY <> FValueY) or NeedUpdateRangeBitmap then
+  if (ValueX <> FValueX) or (ValueY <> FValueY) then
   begin
     FValueX := ValueX;
     FValueY := ValueY;
     PickerChange(NeedUpdateRangeBitmap);
+  end else
+  if NeedUpdateRangeBitmap then
+  begin
+    PickerRepaint(NeedUpdateRangeBitmap);
   end;
 end;
 
