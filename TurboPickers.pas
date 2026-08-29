@@ -278,9 +278,9 @@ type
   protected
     function GetDefaultIncrement(): Double; virtual;
     function GetDefaultIncrementMultiplier(): Integer; virtual;
-    function GetDefaultRange(): TTurboFloatRange; virtual;
+    function GetDefaultRange(): TTurboRangeF; virtual;
     function GetPickerValue(): Double; virtual; abstract;
-    function GetRange(): TTurboFloatRange; virtual;
+    function GetRange(): TTurboRangeF; virtual;
     procedure PickerChange(NeedUpdateRangeBitmap: Boolean);
     procedure SetPickerValue(Value: Double); virtual; abstract;
   public
@@ -547,13 +547,13 @@ type
     procedure SetPickerAbsolutePosition(Size: TSize; Position: TPoint); override;
   protected
     function GetDefaultHorizontalIncrement(): Double; virtual;
-    function GetDefaultHorizontalRange(): TTurboFloatRange; virtual;
+    function GetDefaultHorizontalRange(): TTurboRangeF; virtual;
     function GetDefaultIncrementMultiplier(): Integer; virtual;
     function GetDefaultVerticalIncrement(): Double; virtual;
-    function GetDefaultVerticalRange(): TTurboFloatRange; virtual;
-    function GetHorizontalRange(): TTurboFloatRange; virtual;
+    function GetDefaultVerticalRange(): TTurboRangeF; virtual;
+    function GetHorizontalRange(): TTurboRangeF; virtual;
     function GetPickerValue(): TPointF; virtual; abstract;
-    function GetVerticalRange(): TTurboFloatRange; virtual;
+    function GetVerticalRange(): TTurboRangeF; virtual;
     procedure PickerChange(NeedUpdateRangeBitmap: Boolean);
     procedure SetPickerValue(Value: TPointF); virtual; abstract;
   published
@@ -679,9 +679,9 @@ type
   // TTurboColorLinePicker
   // ===================================================================================================================
 
-  { TTurboLinePickerShader1D }
+  { TTurboPickerShader1D }
 
-  TTurboLinePickerShader1D = function (Value: Integer): TTurboColor of object;
+  TTurboPickerShader1D = function (Value: Integer): TTurboColor of object;
 
   { TTurboLinePickerShader2D }
 
@@ -694,7 +694,7 @@ type
     FAlphaModulation: Boolean;
     FAlphaPreview: Byte;
     FRangeBackground: TTurboTransparentBackground;
-    procedure DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboLinePickerShader1D);
+    procedure DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboPickerShader1D);
     procedure DrawRangeBitmap2D(Image: TLazIntfImage; Shader: TTurboLinePickerShader2D);
     procedure RangeBackgroundChange({%H-}Sender: TObject);
     procedure SetAlphaModulation(Value: Boolean);
@@ -707,7 +707,7 @@ type
     procedure PaintRangeBitmap(Bitmap: TBitmap); override;
   protected
     function GetPickerRangeOpacity(): Byte; virtual;
-    function GetPickerRangeShader1D(): TTurboLinePickerShader1D; virtual;
+    function GetPickerRangeShader1D(): TTurboPickerShader1D; virtual;
     function GetPickerRangeShader2D(): TTurboLinePickerShader2D; virtual;
   public
     constructor Create(Owner: TComponent); override;
@@ -721,13 +721,13 @@ type
   // TTurboColorFloatLinePicker
   // ===================================================================================================================
 
-  { TTurboLinePickerFloatShader1D }
+  { TTurboPickerFloatShader1D }
 
-  TTurboLinePickerFloatShader1D = function (Value: Double): TTurboColor of object;
+  TTurboPickerFloatShader1D = function (Value: Double): TTurboColor of object;
 
-  { TTurboLinePickerFloatShader2D }
+  { TTurboPickerFloatShader2D }
 
-  TTurboLinePickerFloatShader2D = function (ValueX, ValueY: Double): TTurboColor of object;
+  TTurboPickerFloatShader2D = function (ValueX, ValueY: Double): TTurboColor of object;
 
   { TTurboColorFloatLinePicker }
 
@@ -736,8 +736,8 @@ type
     FAlphaModulation: Boolean;
     FAlphaPreview: Byte;
     FRangeBackground: TTurboTransparentBackground;
-    procedure DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboLinePickerFloatShader1D);
-    procedure DrawRangeBitmap2D(Image: TLazIntfImage; Shader: TTurboLinePickerFloatShader2D);
+    procedure DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboPickerFloatShader1D);
+    procedure DrawRangeBitmap2D(Image: TLazIntfImage; Shader: TTurboPickerFloatShader2D);
     procedure RangeBackgroundChange({%H-}Sender: TObject);
     procedure SetAlphaModulation(Value: Boolean);
     procedure SetAlphaPreview(Value: Byte);
@@ -745,12 +745,12 @@ type
   protected
     function GetDefaultIncrement(): Double; override;
     function GetDefaultIncrementMultiplier(): Integer; override;
-    function GetRange(): TTurboFloatRange; override;
+    function GetRange(): TTurboRangeF; override;
     procedure PaintRangeBitmap(Bitmap: TBitmap); override;
   protected
     function GetPickerRangeOpacity(): Byte; virtual;
-    function GetPickerRangeShader1D(): TTurboLinePickerFloatShader1D; virtual;
-    function GetPickerRangeShader2D(): TTurboLinePickerFloatShader2D; virtual;
+    function GetPickerRangeShader1D(): TTurboPickerFloatShader1D; virtual;
+    function GetPickerRangeShader2D(): TTurboPickerFloatShader2D; virtual;
   public
     constructor Create(Owner: TComponent); override;
     destructor Destroy(); override;
@@ -763,9 +763,9 @@ type
   // TTurboColorAxisPicker
   // ===================================================================================================================
 
-  { TTurboAxisPickerShader }
+  { TTurboPickerShader2D }
 
-  TTurboAxisPickerShader = function (ValueX, ValueY: Integer): TTurboColor of object;
+  TTurboPickerShader2D = function (ValueX, ValueY: Integer): TTurboColor of object;
 
   { TTurboColorAxisPicker }
 
@@ -774,7 +774,7 @@ type
     FAlphaModulation: Boolean;
     FAlphaPreview: Byte;
     FRangeBackground: TTurboTransparentBackground;
-    procedure DrawRangeBitmap(Image: TLazIntfImage; Shader: TTurboAxisPickerShader);
+    procedure DrawRangeBitmap(Image: TLazIntfImage; Shader: TTurboPickerShader2D);
     procedure RangeBackgroundChange({%H-}Sender: TObject);
     procedure SetAlphaModulation(Value: Boolean);
     procedure SetAlphaPreview(Value: Byte);
@@ -788,7 +788,7 @@ type
     procedure PaintRangeBitmap(Bitmap: TBitmap); override;
   protected
     function GetPickerRangeOpacity(): Byte; virtual;
-    function GetPickerRangeShader(): TTurboAxisPickerShader; virtual;
+    function GetPickerRangeShader(): TTurboPickerShader2D; virtual;
   public
     constructor Create(Owner: TComponent); override;
     destructor Destroy(); override;
@@ -821,8 +821,8 @@ type
     function GetDefaultHorizontalIncrement(): Double; override;
     function GetDefaultIncrementMultiplier(): Integer; override;
     function GetDefaultVerticalIncrement(): Double; override;
-    function GetHorizontalRange(): TTurboFloatRange; override;
-    function GetVerticalRange(): TTurboFloatRange; override;
+    function GetHorizontalRange(): TTurboRangeF; override;
+    function GetVerticalRange(): TTurboRangeF; override;
     procedure PaintRangeBitmap(Bitmap: TBitmap); override;
     function GetPickerRangeOpacity(): Byte; virtual;
   protected
@@ -838,6 +838,37 @@ type
   // ###################################################################################################################
   // Concrete control classes
   // ###################################################################################################################
+
+  // ===================================================================================================================
+  // TTurboFloatLinePicker
+  // ===================================================================================================================
+
+  { TTurboFloatLinePicker }
+
+  TTurboFloatLinePicker = class(TTurboColorFloatLinePicker)
+  strict private
+    FOnShader: TTurboPickerFloatShader1D;
+    FValue: Double;
+    function DefaultShader1D(Value: Double): TTurboColor;
+    function IsValueStored(): Boolean;
+    procedure SetValueProperty(Value: Double);
+  protected
+    function GetDefaultRange(): TTurboRangeF; override;
+    function GetPickerRangeShader1D(): TTurboPickerFloatShader1D; override;
+    function GetPickerThumbPreviewColor(): TColor; override;
+    function GetPickerValue(): Double; override;
+    function GetRange(): TTurboRangeF; override;
+    procedure SetPickerValue(Value: Double); override;
+  public
+    constructor Create(Owner: TComponent); override;
+    procedure SetValue(Value: Double; NeedUpdateRangeBitmap: Boolean = False);
+  published
+    property AlphaModulation;
+    property AlphaPreview;
+    property RangeBackground;
+    property Value: Double read FValue write SetValueProperty stored IsValueStored;
+    property OnShader: TTurboPickerFloatShader1D read FOnShader write FOnShader;
+  end;
 
   // ===================================================================================================================
   // TTurboHslLinePicker
@@ -886,8 +917,8 @@ type
     procedure SetSaturation(Value: Double);
     procedure UpdateHsl(Hue, Saturation, Lightness: Double);
   protected
-    function GetPickerRangeShader1D(): TTurboLinePickerFloatShader1D; override;
-    function GetPickerRangeShader2D(): TTurboLinePickerFloatShader2D; override;
+    function GetPickerRangeShader1D(): TTurboPickerFloatShader1D; override;
+    function GetPickerRangeShader2D(): TTurboPickerFloatShader2D; override;
     function GetPickerThumbPreviewColor(): TColor; override;
     function GetPickerValue(): Double; override;
     procedure SetPickerValue(Value: Double); override;
@@ -959,8 +990,8 @@ type
     procedure SetValue(Value: Double);
     procedure UpdateHsv(Hue, Saturation, Value: Double);
   protected
-    function GetPickerRangeShader1D(): TTurboLinePickerFloatShader1D; override;
-    function GetPickerRangeShader2D(): TTurboLinePickerFloatShader2D; override;
+    function GetPickerRangeShader1D(): TTurboPickerFloatShader1D; override;
+    function GetPickerRangeShader2D(): TTurboPickerFloatShader2D; override;
     function GetPickerThumbPreviewColor(): TColor; override;
     function GetPickerValue(): Double; override;
     procedure SetPickerValue(Value: Double); override;
@@ -971,7 +1002,7 @@ type
     procedure GetRgb(out Red, Green, Blue: Byte);
     procedure SetHsl(Hue, Saturation, Lightness: Double);
     procedure SetHsv(Hue, Saturation, Value: Double);
-    procedure SetRgb(Red, Green, Blue: Byte);
+    procedure SetRgb(Red, Green, Blue: Byte; IsPrecise: Boolean = True);
   published
     property AlphaPreview;
     property AlphaModulation;
@@ -983,6 +1014,36 @@ type
     property RangeBackground;
     property Saturation: Double read FSaturation write SetSaturation stored IsSaturationStored;
     property Value: Double read FValue write SetValue stored IsValueStored;
+  end;
+
+  // ===================================================================================================================
+  // TTurboLinePicker
+  // ===================================================================================================================
+
+  { TTurboLinePicker }
+
+  TTurboLinePicker = class(TTurboColorLinePicker)
+  strict private
+    FOnShader: TTurboPickerShader1D;
+    FValue: Integer;
+    function DefaultShader1D(Value: Integer): TTurboColor;
+    procedure SetValueProperty(Value: Integer);
+  protected
+    function GetDefaultRange(): TTurboRange; override;
+    function GetPickerRangeShader1D(): TTurboPickerShader1D; override;
+    function GetPickerThumbPreviewColor(): TColor; override;
+    function GetPickerValue(): Integer; override;
+    function GetRange(): TTurboRange; override;
+    procedure SetPickerValue(Value: Integer); override;
+  public
+    constructor Create(Owner: TComponent); override;
+    procedure SetValue(Value: Integer; NeedUpdateRangeBitmap: Boolean = False);
+  published
+    property AlphaModulation;
+    property AlphaPreview;
+    property RangeBackground;
+    property Value: Integer read FValue write SetValueProperty default 0;
+    property OnShader: TTurboPickerShader1D read FOnShader write FOnShader;
   end;
 
   // ===================================================================================================================
@@ -1017,7 +1078,7 @@ type
     procedure SetRed(Value: Byte);
     procedure UpdateRgb(Red, Green, Blue: Byte);
   protected
-    function GetPickerRangeShader1D(): TTurboLinePickerShader1D; override;
+    function GetPickerRangeShader1D(): TTurboPickerShader1D; override;
     function GetPickerThumbPreviewColor(): TColor; override;
     function GetPickerValue(): Integer; override;
     procedure SetPickerValue(Value: Integer); override;
@@ -1067,7 +1128,7 @@ type
     procedure SetPreviewStyle(Value: TTurboAlphaLinePickerPreviewStyle);
     procedure UpdateRgbPreview(Red, Green, Blue: Byte);
   protected
-    function GetPickerRangeShader1D(): TTurboLinePickerShader1D; override;
+    function GetPickerRangeShader1D(): TTurboPickerShader1D; override;
     function GetPickerRangeShader2D(): TTurboLinePickerShader2D; override;
     function GetPickerValue(): Integer; override;
     procedure SetPickerValue(Value: Integer); override;
@@ -1086,6 +1147,43 @@ type
     property ColorModulation: Boolean read FColorModulation write SetColorModulation default True;
     property ColorPreview: TColor read FColorPreview write SetColorPreview default $007F7F7F;
     property PreviewStyle: TTurboAlphaLinePickerPreviewStyle read FPreviewStyle write SetPreviewStyle default TTurboAlphaLinePickerPreviewStyle.RedGreenBlueGradient;
+  end;
+
+  // ===================================================================================================================
+  // TTurboFloatAxisPicker
+  // ===================================================================================================================
+
+  { TTurboFloatAxisPicker }
+
+  TTurboFloatAxisPicker = class(TTurboColorFloatAxisPicker)
+  strict private
+    FOnShader: TTurboPickerFloatShader2D;
+    FValueX: Double;
+    FValueY: Double;
+    function DefaultShader(ValueX, ValueY: Double): TTurboColor;
+    function IsValueXStored(): Boolean;
+    function IsValueYStored(): Boolean;
+    procedure SetValueX(Value: Double);
+    procedure SetValueY(Value: Double);
+  protected
+    function GetDefaultHorizontalRange(): TTurboRangeF; override;
+    function GetDefaultVerticalRange(): TTurboRangeF; override;
+    function GetHorizontalRange(): TTurboRangeF; override;
+    function GetPickerRangeShader(): TTurboPickerFloatShader2D; override;
+    function GetPickerThumbPreviewColor(): TColor; override;
+    function GetPickerValue(): TPointF; override;
+    function GetVerticalRange(): TTurboRangeF; override;
+    procedure SetPickerValue(Value: TPointF); override;
+  public
+    constructor Create(Owner: TComponent); override;
+    procedure SetValue(ValueX, ValueY: Double; NeedUpdateRangeBitmap: Boolean = False);
+  published
+    property AlphaModulation;
+    property AlphaPreview;
+    property OnShader: TTurboPickerFloatShader2D read FOnShader write FOnShader;
+    property RangeBackground;
+    property ValueX: Double read FValueX write SetValueX stored IsValueXStored;
+    property ValueY: Double read FValueY write SetValueY stored IsValueYStored;
   end;
 
   // ===================================================================================================================
@@ -1121,7 +1219,7 @@ type
     procedure SetVerticalKind(Value: TTurboHslAxisPickerKind);
     procedure UpdateHsl(Hue, Saturation, Lightness: Double);
   protected
-    function GetPickerRangeShader(): TTurboLinePickerFloatShader2D; override;
+    function GetPickerRangeShader(): TTurboPickerFloatShader2D; override;
     function GetPickerThumbPreviewColor(): TColor; override;
     function GetPickerValue(): TPointF; override;
     procedure SetPickerValue(Value: TPointF); override;
@@ -1178,7 +1276,7 @@ type
     procedure SetVerticalKind(Value: TTurboHsvAxisPickerKind);
     procedure UpdateHsv(Hue, Saturation, Value: Double);
   protected
-    function GetPickerRangeShader(): TTurboLinePickerFloatShader2D; override;
+    function GetPickerRangeShader(): TTurboPickerFloatShader2D; override;
     function GetPickerThumbPreviewColor(): TColor; override;
     function GetPickerValue(): TPointF; override;
     procedure SetPickerValue(Value: TPointF); override;
@@ -1200,6 +1298,41 @@ type
     property Saturation: Double read FSaturation write SetSaturation stored IsSaturationStored;
     property Value: Double read FValue write SetValue stored IsValueStored;
     property VerticalKind: TTurboHsvAxisPickerKind read FVerticalKind write SetVerticalKind;
+  end;
+
+  // ===================================================================================================================
+  // TTurboAxisPicker
+  // ===================================================================================================================
+
+  { TTurboAxisPicker }
+
+  TTurboAxisPicker = class(TTurboColorAxisPicker)
+  strict private
+    FOnShader: TTurboPickerShader2D;
+    FValueX: Integer;
+    FValueY: Integer;
+    function DefaultShader(ValueX, ValueY: Integer): TTurboColor;
+    procedure SetValueX(Value: Integer);
+    procedure SetValueY(Value: Integer);
+  protected
+    function GetDefaultHorizontalRange(): TTurboRange; override;
+    function GetDefaultVerticalRange(): TTurboRange; override;
+    function GetHorizontalRange(): TTurboRange; override;
+    function GetPickerRangeShader(): TTurboPickerShader2D; override;
+    function GetPickerThumbPreviewColor(): TColor; override;
+    function GetPickerValue(): TPoint; override;
+    function GetVerticalRange(): TTurboRange; override;
+    procedure SetPickerValue(Value: TPoint); override;
+  public
+    constructor Create(Owner: TComponent); override;
+    procedure SetValue(ValueX, ValueY: Integer; NeedUpdateRangeBitmap: Boolean = False);
+  published
+    property AlphaModulation;
+    property AlphaPreview;
+    property OnShader: TTurboPickerShader2D read FOnShader write FOnShader;
+    property RangeBackground;
+    property ValueX: Integer read FValueX write SetValueX;
+    property ValueY: Integer read FValueY write SetValueY;
   end;
 
   // ===================================================================================================================
@@ -1232,7 +1365,7 @@ type
     procedure SetVerticalKind(Value: TTurboRgbAxisPickerKind);
     procedure UpdateRgb(Red, Green, Blue: Byte);
   protected
-    function GetPickerRangeShader(): TTurboAxisPickerShader; override;
+    function GetPickerRangeShader(): TTurboPickerShader2D; override;
     function GetPickerThumbPreviewColor(): TColor; override;
     function GetPickerValue(): TPoint; override;
     procedure SetPickerValue(Value: TPoint); override;
@@ -1645,7 +1778,7 @@ begin
     end;
   end else
   begin
-    FThumbSize.Height := EnsureRange(FThumbSize.Height, 6, 64);
+    FThumbSize.Height := EnsureRange(FThumbSize.Height, 4, 64);
   end;
 
   FirstThumb := FThumbLayout in [TTurboLinePickerThumbLayout.First, TTurboLinePickerThumbLayout.Both];
@@ -2685,12 +2818,12 @@ begin
   end;
 end;
 
-function TTurboCustomFloatLinePicker.GetRange(): TTurboFloatRange;
+function TTurboCustomFloatLinePicker.GetRange(): TTurboRangeF;
 begin
-  Result := TTurboFloatRange.Create(0.0, 1.0);
+  Result := TTurboRangeF.Create(0.0, 1.0);
 end;
 
-function TTurboCustomFloatLinePicker.GetDefaultRange(): TTurboFloatRange;
+function TTurboCustomFloatLinePicker.GetDefaultRange(): TTurboRangeF;
 begin
   Result := GetRange();
 end;
@@ -4059,14 +4192,14 @@ begin
   PickerChanged();
 end;
 
-function TTurboCustomFloatAxisPicker.GetVerticalRange(): TTurboFloatRange;
+function TTurboCustomFloatAxisPicker.GetVerticalRange(): TTurboRangeF;
 begin
-  Result := TTurboFloatRange.Create(0.0, 1.0);
+  Result := TTurboRangeF.Create(0.0, 1.0);
 end;
 
-function TTurboCustomFloatAxisPicker.GetHorizontalRange(): TTurboFloatRange;
+function TTurboCustomFloatAxisPicker.GetHorizontalRange(): TTurboRangeF;
 begin
-  Result := TTurboFloatRange.Create(0.0, 1.0);
+  Result := TTurboRangeF.Create(0.0, 1.0);
 end;
 
 function TTurboCustomFloatAxisPicker.GetDefaultHorizontalIncrement(): Double;
@@ -4084,12 +4217,12 @@ begin
   Result := 10;
 end;
 
-function TTurboCustomFloatAxisPicker.GetDefaultVerticalRange(): TTurboFloatRange;
+function TTurboCustomFloatAxisPicker.GetDefaultVerticalRange(): TTurboRangeF;
 begin
   Result := GetVerticalRange();
 end;
 
-function TTurboCustomFloatAxisPicker.GetDefaultHorizontalRange(): TTurboFloatRange;
+function TTurboCustomFloatAxisPicker.GetDefaultHorizontalRange(): TTurboRangeF;
 begin
   Result := GetHorizontalRange();
 end;
@@ -4390,7 +4523,7 @@ end;
 {$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
-procedure TTurboColorLinePicker.DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboLinePickerShader1D);
+procedure TTurboColorLinePicker.DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboPickerShader1D);
 var
   X, Y, I: Integer;
   Line: array of TFPColor;
@@ -4636,7 +4769,7 @@ end;
 procedure TTurboColorLinePicker.PaintRangeBitmap(Bitmap: TBitmap);
 var
   Image: TLazIntfImage;
-  Shader1D: TTurboLinePickerShader1D;
+  Shader1D: TTurboPickerShader1D;
   Shader2D: TTurboLinePickerShader2D;
 begin
   Image := Bitmap.CreateIntfImage();
@@ -4685,7 +4818,7 @@ begin
   end;
 end;
 
-function TTurboColorLinePicker.GetPickerRangeShader1D(): TTurboLinePickerShader1D;
+function TTurboColorLinePicker.GetPickerRangeShader1D(): TTurboPickerShader1D;
 begin
   Result := nil;
 end;
@@ -4719,7 +4852,7 @@ end;
 {$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
-procedure TTurboColorFloatLinePicker.DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboLinePickerFloatShader1D);
+procedure TTurboColorFloatLinePicker.DrawRangeBitmap1D(Image: TLazIntfImage; Shader: TTurboPickerFloatShader1D);
 var
   X, Y, I: Integer;
   Line: array of TFPColor;
@@ -4835,7 +4968,7 @@ end;
 {$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
-procedure TTurboColorFloatLinePicker.DrawRangeBitmap2D(Image: TLazIntfImage; Shader: TTurboLinePickerFloatShader2D);
+procedure TTurboColorFloatLinePicker.DrawRangeBitmap2D(Image: TLazIntfImage; Shader: TTurboPickerFloatShader2D);
 var
   X, Y, I: Integer;
   ValueX, ValueY: Double;
@@ -4970,8 +5103,8 @@ end;
 procedure TTurboColorFloatLinePicker.PaintRangeBitmap(Bitmap: TBitmap);
 var
   Image: TLazIntfImage;
-  Shader1D: TTurboLinePickerFloatShader1D;
-  Shader2D: TTurboLinePickerFloatShader2D;
+  Shader1D: TTurboPickerFloatShader1D;
+  Shader2D: TTurboPickerFloatShader2D;
 begin
   Image := Bitmap.CreateIntfImage();
   try
@@ -4995,7 +5128,7 @@ end;
 
 function TTurboColorFloatLinePicker.GetDefaultIncrement(): Double;
 begin
-  Result := GetRange().Length / 100.0;
+  Result := GetDefaultRange().Length / 100.0;
 end;
 
 function TTurboColorFloatLinePicker.GetDefaultIncrementMultiplier(): Integer;
@@ -5003,17 +5136,17 @@ begin
   Result := 5;
 end;
 
-function TTurboColorFloatLinePicker.GetRange(): TTurboFloatRange;
+function TTurboColorFloatLinePicker.GetRange(): TTurboRangeF;
 begin
-  Result := TTurboFloatRange.Create(0.0, 1.0);
+  Result := TTurboRangeF.Create(0.0, 1.0);
 end;
 
-function TTurboColorFloatLinePicker.GetPickerRangeShader1D(): TTurboLinePickerFloatShader1D;
+function TTurboColorFloatLinePicker.GetPickerRangeShader1D(): TTurboPickerFloatShader1D;
 begin
   Result := nil;
 end;
 
-function TTurboColorFloatLinePicker.GetPickerRangeShader2D(): TTurboLinePickerFloatShader2D;
+function TTurboColorFloatLinePicker.GetPickerRangeShader2D(): TTurboPickerFloatShader2D;
 begin
   Result := nil;
 end;
@@ -5042,7 +5175,7 @@ end;
 {$IFOPT Q+}{$DEFINE OVERFLOWCHECKS_ON}{$ENDIF}
 {$RANGECHECKS OFF}
 {$OVERFLOWCHECKS OFF}
-procedure TTurboColorAxisPicker.DrawRangeBitmap(Image: TLazIntfImage; Shader: TTurboAxisPickerShader);
+procedure TTurboColorAxisPicker.DrawRangeBitmap(Image: TLazIntfImage; Shader: TTurboPickerShader2D);
 var
   X, Y, I: Integer;
   ValueX, ValueY: Integer;
@@ -5176,7 +5309,7 @@ end;
 procedure TTurboColorAxisPicker.PaintRangeBitmap(Bitmap: TBitmap);
 var
   Image: TLazIntfImage;
-  Shader: TTurboAxisPickerShader;
+  Shader: TTurboPickerShader2D;
 begin
   Image := Bitmap.CreateIntfImage();
   try
@@ -5202,7 +5335,7 @@ begin
   end;
 end;
 
-function TTurboColorAxisPicker.GetPickerRangeShader(): TTurboAxisPickerShader;
+function TTurboColorAxisPicker.GetPickerRangeShader(): TTurboPickerShader2D;
 begin
   Result := nil;
 end;
@@ -5339,7 +5472,7 @@ end;
 
 function TTurboColorFloatAxisPicker.GetDefaultHorizontalIncrement(): Double;
 begin
-  Result := GetHorizontalRange().Length / 100.0;
+  Result := GetDefaultHorizontalRange().Length / 100.0;
 end;
 
 function TTurboColorFloatAxisPicker.GetDefaultIncrementMultiplier(): Integer;
@@ -5349,17 +5482,17 @@ end;
 
 function TTurboColorFloatAxisPicker.GetDefaultVerticalIncrement(): Double;
 begin
-  Result := GetVerticalRange().Length / 100.0;
+  Result := GetDefaultVerticalRange().Length / 100.0;
 end;
 
-function TTurboColorFloatAxisPicker.GetHorizontalRange(): TTurboFloatRange;
+function TTurboColorFloatAxisPicker.GetHorizontalRange(): TTurboRangeF;
 begin
-  Result := TTurboFloatRange.Create(0.0, 1.0);
+  Result := TTurboRangeF.Create(0.0, 1.0);
 end;
 
-function TTurboColorFloatAxisPicker.GetVerticalRange(): TTurboFloatRange;
+function TTurboColorFloatAxisPicker.GetVerticalRange(): TTurboRangeF;
 begin
-  Result := TTurboFloatRange.Create(0.0, 1.0);
+  Result := TTurboRangeF.Create(0.0, 1.0);
 end;
 
 procedure TTurboColorFloatAxisPicker.PaintRangeBitmap(Bitmap: TBitmap);
@@ -5394,6 +5527,98 @@ end;
 function TTurboColorFloatAxisPicker.GetPickerRangeShader(): TTurboAxisPickerFloatShader;
 begin
   Result := nil;
+end;
+
+{ TTurboFloatLinePicker }
+
+constructor TTurboFloatLinePicker.Create(Owner: TComponent);
+begin
+  inherited Create(Owner);
+
+  FValue := 0.0;
+end;
+
+function TTurboFloatLinePicker.DefaultShader1D(Value: Double): TTurboColor;
+begin
+  if Max - Min <> 0.0 then
+  begin
+    case Trunc(((Value - Min) * 2.0 + (Max - Min) / 2) / (Max - Min)) of
+      0:
+      begin
+        Result := TTurboColor.Create(255, 0, 0);
+      end;
+      1:
+      begin
+        Result := TTurboColor.Create(0, 255, 0);
+      end;
+      2:
+      begin
+        Result := TTurboColor.Create(0, 0, 255);
+      end;
+    end;
+  end else
+  begin
+    Result := TTurboColor.Create(0, 255, 0);
+  end;
+end;
+
+function TTurboFloatLinePicker.IsValueStored(): Boolean;
+begin
+  Result := Value <> 0.0;
+end;
+
+procedure TTurboFloatLinePicker.SetValueProperty(Value: Double);
+begin
+  if FValue <> Value then
+  begin
+    FValue := Value;
+    PickerChange(False);
+  end;
+end;
+
+function TTurboFloatLinePicker.GetDefaultRange(): TTurboRangeF;
+begin
+  Result := TTurboRangeF.Create(0.0, 1.0);
+end;
+
+function TTurboFloatLinePicker.GetPickerRangeShader1D(): TTurboPickerFloatShader1D;
+begin
+  if Assigned(FOnShader) then
+  begin
+    Result := FOnShader;
+  end else
+  begin
+    Result := DefaultShader1D;
+  end;
+end;
+
+function TTurboFloatLinePicker.GetPickerThumbPreviewColor(): TColor;
+begin
+  Result := GetPickerRangeShader1D()(Value).Color;
+end;
+
+function TTurboFloatLinePicker.GetPickerValue(): Double;
+begin
+  Result := FValue;
+end;
+
+function TTurboFloatLinePicker.GetRange(): TTurboRangeF;
+begin
+  Result := TTurboRangeF.Create(-MaxDouble / 4.0, MaxDouble / 4.0);
+end;
+
+procedure TTurboFloatLinePicker.SetPickerValue(Value: Double);
+begin
+  FValue := Value;
+end;
+
+procedure TTurboFloatLinePicker.SetValue(Value: Double; NeedUpdateRangeBitmap: Boolean);
+begin
+  if (Value <> FValue) or NeedUpdateRangeBitmap then
+  begin
+    FValue := Value;
+    PickerChange(NeedUpdateRangeBitmap);
+  end;
 end;
 
 { TTurboHslLinePicker }
@@ -5745,7 +5970,7 @@ begin
   PickerInvalidate(True);
 end;
 
-function TTurboHslLinePicker.GetPickerRangeShader1D(): TTurboLinePickerFloatShader1D;
+function TTurboHslLinePicker.GetPickerRangeShader1D(): TTurboPickerFloatShader1D;
 begin
   case FKind of
     TTurboHslLinePickerKind.Hue:
@@ -5781,7 +6006,7 @@ begin
   end;
 end;
 
-function TTurboHslLinePicker.GetPickerRangeShader2D(): TTurboLinePickerFloatShader2D;
+function TTurboHslLinePicker.GetPickerRangeShader2D(): TTurboPickerFloatShader2D;
 begin
   case FKind of
     TTurboHslLinePickerKind.Saturation:
@@ -5932,10 +6157,16 @@ begin
   UpdateHsv(Hue, Saturation, Value);
 end;
 
-procedure TTurboHsvLinePicker.SetRgb(Red, Green, Blue: Byte);
+procedure TTurboHsvLinePicker.SetRgb(Red, Green, Blue: Byte; IsPrecise: Boolean);
 var
   H, S, V: Double;
 begin
+  {if not IsPrecise then
+  begin
+    GetRgb(R, G, B);
+    if (R = Red) and (G = Green) and
+  end;}
+
   RgbToHsv(Red, Green, Blue, H, S, V);
 
   UpdateHsv(H, S, V);
@@ -6235,7 +6466,7 @@ begin
   PickerInvalidate(True);
 end;
 
-function TTurboHsvLinePicker.GetPickerRangeShader1D(): TTurboLinePickerFloatShader1D;
+function TTurboHsvLinePicker.GetPickerRangeShader1D(): TTurboPickerFloatShader1D;
 begin
   case FKind of
     TTurboHsvLinePickerKind.Hue:
@@ -6271,7 +6502,7 @@ begin
   end;
 end;
 
-function TTurboHsvLinePicker.GetPickerRangeShader2D(): TTurboLinePickerFloatShader2D;
+function TTurboHsvLinePicker.GetPickerRangeShader2D(): TTurboPickerFloatShader2D;
 begin
   case FKind of
     TTurboHsvLinePickerKind.Saturation:
@@ -6373,6 +6604,93 @@ begin
         Result := clHighlight;
       end;
     end;
+  end;
+end;
+
+{ TTurboLinePicker }
+
+constructor TTurboLinePicker.Create(Owner: TComponent);
+begin
+  inherited Create(Owner);
+
+  FValue := 0;
+end;
+
+function TTurboLinePicker.DefaultShader1D(Value: Integer): TTurboColor;
+begin
+  if Max - Min <> 0 then
+  begin
+    case ((Value - Min) * 2 + (Max - Min) div 2) div (Max - Min) of
+      0:
+      begin
+        Result := TTurboColor.Create(255, 0, 0);
+      end;
+      1:
+      begin
+        Result := TTurboColor.Create(0, 255, 0);
+      end;
+      2:
+      begin
+        Result := TTurboColor.Create(0, 0, 255);
+      end;
+    end;
+  end else
+  begin
+    Result := TTurboColor.Create(0, 255, 0);
+  end;
+end;
+
+procedure TTurboLinePicker.SetValueProperty(Value: Integer);
+begin
+  if FValue <> Value then
+  begin
+    FValue := Value;
+    PickerChange(False);
+  end;
+end;
+
+function TTurboLinePicker.GetDefaultRange(): TTurboRange;
+begin
+  Result := TTurboRange.Create(0, 255);
+end;
+
+function TTurboLinePicker.GetPickerRangeShader1D(): TTurboPickerShader1D;
+begin
+  if Assigned(FOnShader) then
+  begin
+    Result := FOnShader;
+  end else
+  begin
+    Result := DefaultShader1D;
+  end;
+end;
+
+function TTurboLinePicker.GetPickerThumbPreviewColor(): TColor;
+begin
+  Result := GetPickerRangeShader1D()(Value).Color;
+end;
+
+function TTurboLinePicker.GetPickerValue(): Integer;
+begin
+  Result := FValue;
+end;
+
+function TTurboLinePicker.GetRange(): TTurboRange;
+begin
+  Result := TTurboRange.Create(-MaxInt div 4, MaxInt div 4);
+end;
+
+procedure TTurboLinePicker.SetPickerValue(Value: Integer);
+begin
+  FValue := Value;
+end;
+
+procedure TTurboLinePicker.SetValue(Value: Integer; NeedUpdateRangeBitmap: Boolean);
+begin
+  if (Value <> FValue) or NeedUpdateRangeBitmap then
+  begin
+    FValue := Value;
+    PickerChange(NeedUpdateRangeBitmap);
   end;
 end;
 
@@ -6536,7 +6854,7 @@ end;
 {$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
 {$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
-function TTurboRgbLinePicker.GetPickerRangeShader1D(): TTurboLinePickerShader1D;
+function TTurboRgbLinePicker.GetPickerRangeShader1D(): TTurboPickerShader1D;
 begin
   case FKind of
     TTurboRgbLinePickerKind.Red:
@@ -6777,7 +7095,7 @@ end;
 {$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
 {$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
-function TTurboAlphaLinePicker.GetPickerRangeShader1D(): TTurboLinePickerShader1D;
+function TTurboAlphaLinePicker.GetPickerRangeShader1D(): TTurboPickerShader1D;
 begin
   if FColorModulation then
   begin
@@ -6865,6 +7183,150 @@ begin
   end else
   begin
     Result := clHighlight;
+  end;
+end;
+
+{ TTurboFloatAxisPicker }
+
+constructor TTurboFloatAxisPicker.Create(Owner: TComponent);
+begin
+  inherited Create(Owner);
+
+  FValueX := 0.0;
+  FValueY := 0.0;
+end;
+
+function TTurboFloatAxisPicker.DefaultShader(ValueX, ValueY: Double): TTurboColor;
+var
+  R, G: Byte;
+begin
+  if HorizontalMax - HorizontalMin <> 0.0 then
+  begin
+    case Trunc(((ValueX - HorizontalMin) * 2.0 + (HorizontalMax - HorizontalMin) / 2.0) / (HorizontalMax - HorizontalMin)) of
+      0:
+      begin
+        R := 0;
+      end;
+      1:
+      begin
+        R := 127;
+      end;
+      2:
+      begin
+        R := 255;
+      end;
+    end;
+  end else
+  begin
+    R := 127;
+  end;
+
+  if VerticalMax - VerticalMin <> 0.0 then
+  begin
+    case Trunc(((ValueY - VerticalMin) * 2.0 + (VerticalMax - VerticalMin) / 2.0) / (VerticalMax - VerticalMin)) of
+      0:
+      begin
+        G := 0;
+      end;
+      1:
+      begin
+        G := 127;
+      end;
+      2:
+      begin
+        G := 255;
+      end;
+    end;
+  end else
+  begin
+    R := 127;
+  end;
+
+  Result := TTurboColor.Create(R, G, 255);
+end;
+
+function TTurboFloatAxisPicker.IsValueXStored(): Boolean;
+begin
+  Result := FValueX <> 0.0;
+end;
+
+function TTurboFloatAxisPicker.IsValueYStored(): Boolean;
+begin
+  Result := FValueY <> 0.0;
+end;
+
+procedure TTurboFloatAxisPicker.SetValueX(Value: Double);
+begin
+  if FValueX <> Value then
+  begin
+    FValueX := Value;
+    PickerChange(False);
+  end;
+end;
+
+procedure TTurboFloatAxisPicker.SetValueY(Value: Double);
+begin
+  if FValueY <> Value then
+  begin
+    FValueY := Value;
+    PickerChange(False);
+  end;
+end;
+
+function TTurboFloatAxisPicker.GetDefaultHorizontalRange(): TTurboRangeF;
+begin
+  Result := TTurboRangeF.Create(0.0, 1.0);
+end;
+
+function TTurboFloatAxisPicker.GetDefaultVerticalRange(): TTurboRangeF;
+begin
+  Result := TTurboRangeF.Create(0.0, 1.0);
+end;
+
+function TTurboFloatAxisPicker.GetHorizontalRange(): TTurboRangeF;
+begin
+  Result := TTurboRangeF.Create(-MaxDouble / 4.0, MaxDouble / 4.0);
+end;
+
+function TTurboFloatAxisPicker.GetPickerRangeShader(): TTurboPickerFloatShader2D;
+begin
+  if Assigned(FOnShader) then
+  begin
+    Result := FOnShader;
+  end else
+  begin
+    Result := DefaultShader;
+  end;
+end;
+
+function TTurboFloatAxisPicker.GetPickerThumbPreviewColor(): TColor;
+begin
+  Result := GetPickerRangeShader()(ValueX, ValueY).Color;
+end;
+
+function TTurboFloatAxisPicker.GetPickerValue(): TPointF;
+begin
+  Result := TPointF.Create(FValueX, FValueY);
+end;
+
+function TTurboFloatAxisPicker.GetVerticalRange(): TTurboRangeF;
+begin
+  Result := TTurboRangeF.Create(-MaxDouble / 4.0, MaxDouble / 4.0);
+end;
+
+procedure TTurboFloatAxisPicker.SetPickerValue(Value: TPointF);
+begin
+  FValueX := Value.X;
+  FValueY := Value.Y;
+end;
+
+procedure TTurboFloatAxisPicker.SetValue(ValueX, ValueY: Double; NeedUpdateRangeBitmap: Boolean);
+begin
+  if (ValueX <> FValueX) or (ValueY <> FValueY) or NeedUpdateRangeBitmap then
+  begin
+    FValueX := ValueX;
+    FValueY := ValueY;
+    PickerChange(NeedUpdateRangeBitmap);
   end;
 end;
 
@@ -7094,7 +7556,7 @@ end;
 {$IFDEF RANGECHECKS_ON}{$RANGECHECKS ON}{$ELSE}{$RANGECHECKS OFF}{$ENDIF}
 {$IFDEF OVERFLOWCHECKS_ON}{$OVERFLOWCHECKS ON}{$ELSE}{$OVERFLOWCHECKS OFF}{$ENDIF}
 
-function TTurboHslAxisPicker.GetPickerRangeShader(): TTurboLinePickerFloatShader2D;
+function TTurboHslAxisPicker.GetPickerRangeShader(): TTurboPickerFloatShader2D;
 begin
   if (FHorizontalKind = TTurboHslAxisPickerKind.Hue) and (FVerticalKind = TTurboHslAxisPickerKind.Saturation) then
   begin
@@ -7384,7 +7846,7 @@ begin
   PickerChange(NeedUpdate);
 end;
 
-function TTurboHsvAxisPicker.GetPickerRangeShader(): TTurboLinePickerFloatShader2D;
+function TTurboHsvAxisPicker.GetPickerRangeShader(): TTurboPickerFloatShader2D;
 begin
   if (FHorizontalKind = TTurboHsvAxisPickerKind.Hue) and (FVerticalKind = TTurboHsvAxisPickerKind.Saturation) then
   begin
@@ -7522,6 +7984,140 @@ var
 begin
   RgbToHsv(Red, Green, Blue, H, S, V);
   UpdateHsv(H, S, V);
+end;
+
+{ TTurboAxisPicker }
+
+constructor TTurboAxisPicker.Create(Owner: TComponent);
+begin
+  inherited Create(Owner);
+
+  FValueX := 0;
+  FValueY := 0;
+end;
+
+function TTurboAxisPicker.DefaultShader(ValueX, ValueY: Integer): TTurboColor;
+var
+  R, G: Byte;
+begin
+  if HorizontalMax - HorizontalMin <> 0 then
+  begin
+    case ((ValueX - HorizontalMin) * 2 + (HorizontalMax - HorizontalMin) div 2) div (HorizontalMax - HorizontalMin) of
+      0:
+      begin
+        R := 0;
+      end;
+      1:
+      begin
+        R := 127;
+      end;
+      2:
+      begin
+        R := 255;
+      end;
+    end;
+  end else
+  begin
+    R := 127;
+  end;
+
+  if VerticalMax - VerticalMin <> 0 then
+  begin
+    case ((ValueY - VerticalMin) * 2 + (VerticalMax - VerticalMin) div 2) div (VerticalMax - VerticalMin) of
+      0:
+      begin
+        G := 0;
+      end;
+      1:
+      begin
+        G := 127;
+      end;
+      2:
+      begin
+        G := 255;
+      end;
+    end;
+  end else
+  begin
+    R := 127;
+  end;
+
+  Result := TTurboColor.Create(R, G, 255);
+end;
+
+procedure TTurboAxisPicker.SetValueX(Value: Integer);
+begin
+  if FValueX <> Value then
+  begin
+    FValueX := Value;
+    PickerChange(False);
+  end;
+end;
+
+procedure TTurboAxisPicker.SetValueY(Value: Integer);
+begin
+  if FValueY <> Value then
+  begin
+    FValueY := Value;
+    PickerChange(False);
+  end;
+end;
+
+function TTurboAxisPicker.GetDefaultHorizontalRange(): TTurboRange;
+begin
+  Result := TTurboRange.Create(0, 255);
+end;
+
+function TTurboAxisPicker.GetDefaultVerticalRange(): TTurboRange;
+begin
+  Result := TTurboRange.Create(0, 255);
+end;
+
+function TTurboAxisPicker.GetHorizontalRange(): TTurboRange;
+begin
+  Result := TTurboRange.Create(-MaxInt div 4, MaxInt div 4);
+end;
+
+function TTurboAxisPicker.GetPickerRangeShader(): TTurboPickerShader2D;
+begin
+  if Assigned(FOnShader) then
+  begin
+    Result := FOnShader;
+  end else
+  begin
+    Result := DefaultShader;
+  end;
+end;
+
+function TTurboAxisPicker.GetPickerThumbPreviewColor(): TColor;
+begin
+  Result := GetPickerRangeShader()(ValueX, ValueY).Color;
+end;
+
+function TTurboAxisPicker.GetPickerValue(): TPoint;
+begin
+  Result := TPoint.Create(FValueX, FValueY);
+end;
+
+function TTurboAxisPicker.GetVerticalRange(): TTurboRange;
+begin
+  Result := TTurboRange.Create(-MaxInt div 4, MaxInt div 4);
+end;
+
+procedure TTurboAxisPicker.SetPickerValue(Value: TPoint);
+begin
+  FValueX := Value.X;
+  FValueY := Value.Y;
+end;
+
+procedure TTurboAxisPicker.SetValue(ValueX, ValueY: Integer; NeedUpdateRangeBitmap: Boolean);
+begin
+  if (ValueX <> FValueX) or (ValueY <> FValueY) or NeedUpdateRangeBitmap then
+  begin
+    FValueX := ValueX;
+    FValueY := ValueY;
+    PickerChange(NeedUpdateRangeBitmap);
+  end;
 end;
 
 { TTurboRgbAxisPicker }
@@ -7714,7 +8310,7 @@ begin
   PickerChange(True);
 end;
 
-function TTurboRgbAxisPicker.GetPickerRangeShader(): TTurboAxisPickerShader;
+function TTurboRgbAxisPicker.GetPickerRangeShader(): TTurboPickerShader2D;
 begin
   if (FHorizontalKind = TTurboRgbAxisPickerKind.Red) and (FVerticalKind = TTurboRgbAxisPickerKind.Green) then
   begin

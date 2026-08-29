@@ -210,9 +210,9 @@ type
     property Length: Integer read GetLength;
   end;
 
-  { TTurboFloatRange }
+  { TTurboRangeF }
 
-  TTurboFloatRange = record
+  TTurboRangeF = record
   private
     FMax: Double;
     FMin: Double;
@@ -836,9 +836,9 @@ begin
   end;
 end;
 
-{ TTurboFloatRange }
+{ TTurboRangeF }
 
-constructor TTurboFloatRange.Create(Min, Max: Double);
+constructor TTurboRangeF.Create(Min, Max: Double);
 begin
   if Min > Max then
   begin
@@ -848,12 +848,12 @@ begin
   FMax := Max;
 end;
 
-function TTurboFloatRange.GetLength(): Double;
+function TTurboRangeF.GetLength(): Double;
 begin
   Result := FMax - FMin;
 end;
 
-procedure TTurboFloatRange.SetMax(Value: Double);
+procedure TTurboRangeF.SetMax(Value: Double);
 begin
   if FMax = Value then
   begin
@@ -867,7 +867,7 @@ begin
   end;
 end;
 
-procedure TTurboFloatRange.SetMin(Value: Double);
+procedure TTurboRangeF.SetMin(Value: Double);
 begin
   if FMin = Value then
   begin
@@ -881,7 +881,7 @@ begin
   end;
 end;
 
-function TTurboFloatRange.Ensure(Value: Double): Double;
+function TTurboRangeF.Ensure(Value: Double): Double;
 begin
   if Value < FMin then
   begin

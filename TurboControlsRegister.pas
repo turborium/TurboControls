@@ -46,6 +46,10 @@ begin
     TTurboHslAxisPicker,
     TTurboHsvLinePicker,
     TTurboHsvAxisPicker,
+    TTurboLinePicker,
+    TTurboFloatLinePicker,
+    TTurboAxisPicker,
+    TTurboFloatAxisPicker,
     TTurboScrollBox,
     TTurboDropDownButton
   ]);
