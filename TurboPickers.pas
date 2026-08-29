@@ -244,6 +244,8 @@ type
     procedure SetPickerValue(Value: Integer); virtual; abstract;
   public
     constructor Create(Owner: TComponent); override;
+    procedure SetParams(Value: Integer; Min, Max: Integer; NeedUpdateRangeBitmap: Boolean = False);
+    procedure SetValue(Value: Integer; NeedUpdateRangeBitmap: Boolean = False);
   published
     property Increment: Integer read FIncrement write SetIncrement stored IsIncrementStored;
     property IncrementMultiplier: Integer read FIncrementMultiplier write SetIncrementMultiplier stored IsIncrementMultiplierStored;
@@ -286,6 +288,8 @@ type
     procedure SetPickerValue(Value: Double); virtual; abstract;
   public
     constructor Create(Owner: TComponent); override;
+    procedure SetParams(Value: Double; Min, Max: Double; NeedUpdateRangeBitmap: Boolean = False);
+    procedure SetValue(Value: Double; NeedUpdateRangeBitmap: Boolean = False);
   published
     property Increment: Double read FIncrement write SetIncrement stored IsIncrementStored;
     property IncrementMultiplier: Integer read FIncrementMultiplier write SetIncrementMultiplier stored IsIncrementMultiplierStored;
@@ -511,6 +515,8 @@ type
     property VerticalMin: Integer read FVerticalMin write SetVerticalMin stored IsVerticalMinStored;
   public
     constructor Create(Owner: TComponent); override;
+    procedure SetParams(ValueX: Integer; MinX, MaxX: Integer; ValueY: Integer; MinY, MaxY: Integer; NeedUpdateRangeBitmap: Boolean = False);
+    procedure SetValue(ValueX, ValueY: Integer; NeedUpdateRangeBitmap: Boolean = False);
   end;
 
   // ===================================================================================================================
@@ -568,6 +574,8 @@ type
     property VerticalMin: Double read FVerticalMin write SetVerticalMin stored IsVerticalMinStored;
   public
     constructor Create(Owner: TComponent); override;
+    procedure SetParams(ValueX: Double; MinX, MaxX: Double; ValueY: Double; MinY, MaxY: Double; NeedUpdateRangeBitmap: Boolean = False);
+    procedure SetValue(ValueX, ValueY: Double; NeedUpdateRangeBitmap: Boolean = False);
   end;
 
   // ===================================================================================================================
@@ -868,7 +876,6 @@ type
     procedure SetPickerValue(Value: Double); override;
   public
     constructor Create(Owner: TComponent); override;
-    procedure SetValue(Value: Double; NeedUpdateRangeBitmap: Boolean = False);
   published
     property AlphaModulation;
     property AlphaPreview;
@@ -1050,7 +1057,6 @@ type
     procedure SetPickerValue(Value: Integer); override;
   public
     constructor Create(Owner: TComponent); override;
-    procedure SetValue(Value: Integer; NeedUpdateRangeBitmap: Boolean = False);
   published
     property AlphaModulation;
     property AlphaPreview;
@@ -1193,7 +1199,6 @@ type
     procedure SetPickerValue(Value: TPointF); override;
   public
     constructor Create(Owner: TComponent); override;
-    procedure SetValue(ValueX, ValueY: Double; NeedUpdateRangeBitmap: Boolean = False);
   published
     property AlphaModulation;
     property AlphaPreview;
@@ -2496,6 +2501,49 @@ begin
   FIncrementMultiplier := GetDefaultIncrementMultiplier();
 end;
 
+procedure TTurboCustomLinePicker.SetParams(Value: Integer; Min, Max: Integer; NeedUpdateRangeBitmap: Boolean);
+var
+  IsValueChanged: Boolean;
+  IsMinMaxChanged: Boolean;
+begin
+  Min := GetRange().Ensure(Min);
+  Max := GetRange().Ensure(Max);
+  if Max < Min then
+  begin
+    Max := Min;
+  end;
+  Value := EnsureRange(Value, Min, Max);
+
+  IsValueChanged := GetPickerValue() <> Value;
+  IsMinMaxChanged := (FMin <> Min) or (FMax <> Max);
+
+  FMin := Min;
+  FMax := Max;
+  SetPickerValue(Value);
+
+  if IsValueChanged then
+  begin
+    PickerChange(IsMinMaxChanged or NeedUpdateRangeBitmap);
+  end else
+  begin
+    PickerRepaint(IsMinMaxChanged or NeedUpdateRangeBitmap);
+  end;
+end;
+
+procedure TTurboCustomLinePicker.SetValue(Value: Integer; NeedUpdateRangeBitmap: Boolean);
+begin
+  Value := EnsureRange(Value, FMin, FMax);
+  if Value <> GetPickerValue() then
+  begin
+    SetPickerValue(Value);
+    PickerChange(NeedUpdateRangeBitmap);
+  end else
+  if NeedUpdateRangeBitmap then
+  begin
+    PickerRepaint(NeedUpdateRangeBitmap);
+  end;
+end;
+
 function TTurboCustomLinePicker.IsIncrementMultiplierStored(): Boolean;
 begin
   Result := FIncrementMultiplier <> GetDefaultIncrementMultiplier();
@@ -2700,6 +2748,49 @@ begin
 
   FIncrement := GetDefaultIncrement();
   FIncrementMultiplier := GetDefaultIncrementMultiplier();
+end;
+
+procedure TTurboCustomFloatLinePicker.SetParams(Value: Double; Min, Max: Double; NeedUpdateRangeBitmap: Boolean);
+var
+  IsValueChanged: Boolean;
+  IsMinMaxChanged: Boolean;
+begin
+  Min := GetRange().Ensure(Min);
+  Max := GetRange().Ensure(Max);
+  if Max < Min then
+  begin
+    Max := Min;
+  end;
+  Value := EnsureRange(Value, Min, Max);
+
+  IsValueChanged := GetPickerValue() <> Value;
+  IsMinMaxChanged := (FMin <> Min) or (FMax <> Max);
+
+  FMin := Min;
+  FMax := Max;
+  SetPickerValue(Value);
+
+  if IsValueChanged then
+  begin
+    PickerChange(IsMinMaxChanged or NeedUpdateRangeBitmap);
+  end else
+  begin
+    PickerRepaint(IsMinMaxChanged or NeedUpdateRangeBitmap);
+  end;
+end;
+
+procedure TTurboCustomFloatLinePicker.SetValue(Value: Double; NeedUpdateRangeBitmap: Boolean);
+begin
+  Value := EnsureRange(Value, FMin, FMax);
+  if Value <> GetPickerValue() then
+  begin
+    SetPickerValue(Value);
+    PickerChange(NeedUpdateRangeBitmap);
+  end else
+  if NeedUpdateRangeBitmap then
+  begin
+    PickerRepaint(NeedUpdateRangeBitmap);
+  end;
 end;
 
 function TTurboCustomFloatLinePicker.IsMaxStored(): Boolean;
@@ -3588,6 +3679,60 @@ begin
   FIncrementMultiplier := GetDefaultIncrementMultiplier();
 end;
 
+procedure TTurboCustomAxisPicker.SetParams(ValueX: Integer; MinX, MaxX: Integer; ValueY: Integer; MinY, MaxY: Integer; NeedUpdateRangeBitmap: Boolean);
+var
+  IsValueChanged: Boolean;
+  IsMinMaxChanged: Boolean;
+begin
+  MinX := GetHorizontalRange().Ensure(MinX);
+  MaxX := GetHorizontalRange().Ensure(MaxX);
+  if MaxX < MinX then
+  begin
+    MaxX := MinX;
+  end;
+  ValueX := EnsureRange(ValueX, MinX, MaxX);
+
+  MinY := GetVerticalRange().Ensure(MinY);
+  MaxY := GetVerticalRange().Ensure(MaxY);
+  if MaxY < MinY then
+  begin
+    MaxY := MinY;
+  end;
+  ValueY := EnsureRange(ValueY, MinY, MaxY);
+
+  IsValueChanged := (GetPickerValue().X <> ValueX) or (GetPickerValue().Y <> ValueY);
+  IsMinMaxChanged := (MinX <> FHorizontalMin) or (MaxX <> FHorizontalMax) or (MinY <> FVerticalMin) or (MaxY <> FVerticalMax);
+
+  FHorizontalMin := MinX;
+  FHorizontalMax := MaxX;
+  FVerticalMin := MinY;
+  FVerticalMax := MaxY;
+  SetPickerValue(TPoint.Create(ValueX, ValueY));
+
+  if IsValueChanged then
+  begin
+    PickerChange(IsMinMaxChanged or NeedUpdateRangeBitmap);
+  end else
+  begin
+    PickerRepaint(IsMinMaxChanged or NeedUpdateRangeBitmap);
+  end;
+end;
+
+procedure TTurboCustomAxisPicker.SetValue(ValueX, ValueY: Integer; NeedUpdateRangeBitmap: Boolean);
+begin
+  ValueX := EnsureRange(ValueX, FHorizontalMin, FHorizontalMax);
+  ValueY := EnsureRange(ValueY, FVerticalMin, FVerticalMax);
+  if (ValueX <> GetPickerValue().X) or (ValueY <> GetPickerValue().Y) then
+  begin
+    SetPickerValue(TPoint.Create(ValueX, ValueY));
+    PickerChange(NeedUpdateRangeBitmap);
+  end else
+  if NeedUpdateRangeBitmap then
+  begin
+    PickerRepaint(NeedUpdateRangeBitmap);
+  end;
+end;
+
 function TTurboCustomAxisPicker.IsHorizontalIncrementStored(): Boolean;
 begin
   Result := GetDefaultHorizontalIncrement() <> FHorizontalIncrement;
@@ -3931,6 +4076,60 @@ begin
   FHorizontalIncrement := GetDefaultHorizontalIncrement();
 
   FIncrementMultiplier := GetDefaultIncrementMultiplier();
+end;
+
+procedure TTurboCustomFloatAxisPicker.SetParams(ValueX: Double; MinX, MaxX: Double; ValueY: Double; MinY, MaxY: Double; NeedUpdateRangeBitmap: Boolean);
+var
+  IsValueChanged: Boolean;
+  IsMinMaxChanged: Boolean;
+begin
+  MinX := GetHorizontalRange().Ensure(MinX);
+  MaxX := GetHorizontalRange().Ensure(MaxX);
+  if MaxX < MinX then
+  begin
+    MaxX := MinX;
+  end;
+  ValueX := EnsureRange(ValueX, MinX, MaxX);
+
+  MinY := GetVerticalRange().Ensure(MinY);
+  MaxY := GetVerticalRange().Ensure(MaxY);
+  if MaxY < MinY then
+  begin
+    MaxY := MinY;
+  end;
+  ValueY := EnsureRange(ValueY, MinY, MaxY);
+
+  IsValueChanged := (GetPickerValue().X <> ValueX) or (GetPickerValue().Y <> ValueY);
+  IsMinMaxChanged := (MinX <> FHorizontalMin) or (MaxX <> FHorizontalMax) or (MinY <> FVerticalMin) or (MaxY <> FVerticalMax);
+
+  FHorizontalMin := MinX;
+  FHorizontalMax := MaxX;
+  FVerticalMin := MinY;
+  FVerticalMax := MaxY;
+  SetPickerValue(TPointF.Create(ValueX, ValueY));
+
+  if IsValueChanged then
+  begin
+    PickerChange(IsMinMaxChanged or NeedUpdateRangeBitmap);
+  end else
+  begin
+    PickerRepaint(IsMinMaxChanged or NeedUpdateRangeBitmap);
+  end;
+end;
+
+procedure TTurboCustomFloatAxisPicker.SetValue(ValueX, ValueY: Double; NeedUpdateRangeBitmap: Boolean);
+begin
+  ValueX := EnsureRange(ValueX, FHorizontalMin, FHorizontalMax);
+  ValueY := EnsureRange(ValueY, FVerticalMin, FVerticalMax);
+  if (ValueX <> GetPickerValue().X) or (ValueY <> GetPickerValue().Y) then
+  begin
+    SetPickerValue(TPointF.Create(ValueX, ValueY));
+    PickerChange(NeedUpdateRangeBitmap);
+  end else
+  if NeedUpdateRangeBitmap then
+  begin
+    PickerRepaint(NeedUpdateRangeBitmap);
+  end;
 end;
 
 function TTurboCustomFloatAxisPicker.IsHorizontalMaxStored(): Boolean;
@@ -5655,19 +5854,6 @@ begin
   FValue := Value;
 end;
 
-procedure TTurboFloatLinePicker.SetValue(Value: Double; NeedUpdateRangeBitmap: Boolean);
-begin
-  if Value <> FValue then
-  begin
-    FValue := Value;
-    PickerChange(NeedUpdateRangeBitmap);
-  end else
-  if NeedUpdateRangeBitmap then
-  begin
-    PickerRepaint(NeedUpdateRangeBitmap);
-  end;
-end;
-
 { TTurboHslLinePicker }
 
 constructor TTurboHslLinePicker.Create(Owner: TComponent);
@@ -6741,19 +6927,6 @@ begin
   FValue := Value;
 end;
 
-procedure TTurboLinePicker.SetValue(Value: Integer; NeedUpdateRangeBitmap: Boolean);
-begin
-  if Value <> FValue then
-  begin
-    FValue := Value;
-    PickerChange(NeedUpdateRangeBitmap);
-  end else
-  if NeedUpdateRangeBitmap then
-  begin
-    PickerRepaint(NeedUpdateRangeBitmap);
-  end;
-end;
-
 { TTurboRgbLinePicker }
 
 constructor TTurboRgbLinePicker.Create(Owner: TComponent);
@@ -7387,20 +7560,6 @@ procedure TTurboFloatAxisPicker.SetPickerValue(Value: TPointF);
 begin
   FValueX := Value.X;
   FValueY := Value.Y;
-end;
-
-procedure TTurboFloatAxisPicker.SetValue(ValueX, ValueY: Double; NeedUpdateRangeBitmap: Boolean);
-begin
-  if (ValueX <> FValueX) or (ValueY <> FValueY) then
-  begin
-    FValueX := ValueX;
-    FValueY := ValueY;
-    PickerChange(NeedUpdateRangeBitmap);
-  end else
-  if NeedUpdateRangeBitmap then
-  begin
-    PickerRepaint(NeedUpdateRangeBitmap);
-  end;
 end;
 
 { TTurboHslAxisPicker }
