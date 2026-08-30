@@ -27,7 +27,7 @@ unit TurboControls;
 interface
 
 uses
-  Classes, Math, SysUtils, Graphics, Controls, LMessages, Forms, TurboExternalGraphics;
+  Classes, Math, SysUtils, Graphics, Controls, LMessages, Forms, TurboGraphics;
 
 type
 

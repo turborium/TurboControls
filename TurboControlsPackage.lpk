@@ -32,8 +32,8 @@ Users may obtain a commercial version of this software without the requirement t
         <UnitName Value="TurboControls"/>
       </Item>
       <Item>
-        <Filename Value="TurboExternalGraphics.pas"/>
-        <UnitName Value="TurboExternalGraphics"/>
+        <Filename Value="TurboGraphics.pas"/>
+        <UnitName Value="TurboGraphics"/>
       </Item>
       <Item>
         <Filename Value="TurboPickers.pas"/>

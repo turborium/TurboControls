@@ -15,7 +15,7 @@
 // Telegram: @turborium
 // =====================================================================================================================
 
-unit TurboExternalGraphics;
+unit TurboGraphics;
 
 {$MODE DELPHIUNICODE}
 {$ASSERTIONS ON}

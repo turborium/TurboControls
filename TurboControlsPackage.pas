@@ -8,7 +8,7 @@ unit TurboControlsPackage;
 interface
 
 uses
-  TurboControls, TurboExternalGraphics, TurboPickers, TurboControlsRegister, TurboCommonControls, LazarusPackageIntf;
+  TurboControls, TurboGraphics, TurboPickers, TurboControlsRegister, TurboCommonControls, LazarusPackageIntf;
 
 implementation
 

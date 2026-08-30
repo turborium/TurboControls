@@ -28,7 +28,7 @@ interface
 
 uses
   Classes, SysUtils, Types, Math, Graphics, Controls, IntfGraphics, LCLIntf,
-  LCLType, FpImage, LMessages, TurboControls, TurboExternalGraphics;
+  LCLType, FpImage, LMessages, TurboControls, TurboGraphics;
 
 type
   // ###################################################################################################################
