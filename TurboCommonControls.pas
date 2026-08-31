@@ -39,7 +39,7 @@ type
 
   TTurboScrollBox = class(TScrollBox)
   private
-    FImmediateScrollUpdate: Boolean;
+    FImmediateRepaint: Boolean;
     FScrollEvent: TTurboScrollEvent;
   protected
     procedure WMHScroll(var Message: TLMHScroll); message LM_HSCROLL;
@@ -48,7 +48,7 @@ type
     constructor Create(Owner: TComponent); override;
     procedure ScrollBy(DeltaX, DeltaY: Integer); override;
   published
-    property ImmediateScrollUpdate: Boolean read FImmediateScrollUpdate write FImmediateScrollUpdate default False;
+    property ImmediateRepaint: Boolean read FImmediateRepaint write FImmediateRepaint default True;
     property OnScroll: TTurboScrollEvent read FScrollEvent write FScrollEvent;
   end;
 
@@ -77,7 +77,7 @@ constructor TTurboScrollBox.Create(Owner: TComponent);
 begin
   inherited Create(Owner);
 
-  FImmediateScrollUpdate := False;
+  FImmediateRepaint := True;
 end;
 
 procedure TTurboScrollBox.WMHScroll(var Message: TLMHScroll);
@@ -105,7 +105,7 @@ begin
   inherited ScrollBy(DeltaX, DeltaY);
 
   {$IFDEF WINDOWS}
-  if FImmediateScrollUpdate then
+  if FImmediateRepaint then
   begin
     UpdateWindow(Handle);
   end;
