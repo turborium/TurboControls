@@ -5,7 +5,7 @@ unit UnitFrameHsvLinePicker;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, ComCtrls, StdCtrls, Spin, TurboPickers, TurboExternalGraphics;
+  Classes, SysUtils, Forms, Controls, ComCtrls, StdCtrls, Spin, TurboPickers, TurboGraphics;
 
 type
 

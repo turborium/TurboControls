@@ -5,7 +5,7 @@ unit UnitFrameClassicPicker;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Spin, StdCtrls, ExtCtrls, TurboPickers, TurboExternalGraphics;
+  Classes, SysUtils, Forms, Controls, Spin, StdCtrls, ExtCtrls, TurboPickers, TurboGraphics;
 
 type
 

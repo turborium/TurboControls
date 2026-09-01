@@ -5,7 +5,7 @@ unit UnitFrameHslAxisPicker;
 interface
 
 uses
-  Classes, SysUtils, TypInfo, Forms, Controls, StdCtrls, Spin, TurboPickers, TurboExternalGraphics;
+  Classes, SysUtils, TypInfo, Forms, Controls, StdCtrls, Spin, TurboPickers, TurboGraphics;
 
 type
 
