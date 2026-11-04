@@ -282,4 +282,10 @@ A descendant of `TButton` with ability to show Drop Down Menu at Click.
 
 - `DropDownMenu`: Popup Menu associated with this Button.
 
+### TTurboNotebook
+
+![TTurboNotebook](icons/TTurboNotebook_200.png)
+
+A descendant of `TExtendedNotebook` with ability to automatic and fast show Content. (for example: Frames)
+
 ---

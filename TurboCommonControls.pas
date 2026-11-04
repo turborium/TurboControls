@@ -27,7 +27,7 @@ unit TurboCommonControls;
 interface
 
 uses
-  Classes, SysUtils, Forms, LCLIntf, LMessages, StdCtrls, Menus, Controls;
+  Classes, SysUtils, Forms, LCLIntf, LMessages, StdCtrls, Menus, Controls, ComCtrls, ExtendedNotebook;
 
 type
 
@@ -67,6 +67,58 @@ type
     procedure Click(); override;
   published
     property DropDownMenu: TPopupMenu read FDropDownMenu write SetDropDownMenu;
+  end;
+
+  { TTurboTabSheet }
+
+  TTurboTabSheet = class(TTabSheet)
+  private
+    FActiveContent: TControl;
+    FContent: TControl;
+    procedure AttachContent(Content: TControl);
+    procedure DeattachContent();
+    procedure AlignContent();
+    procedure SetContent(Value: TControl);
+  protected
+    procedure DoShow(); override;
+    procedure DoHide(); override;
+    procedure Resize(); override;
+  public
+    property Content: TControl read FContent write SetContent;
+    property ActiveContent: TControl read FActiveContent;
+  end;
+
+  { TTurboNotebookPrepareContentEvent }
+
+  TTurboNotebookPrepareContentEvent = procedure(Sender: TObject; TabSheet: TTurboTabSheet; var Content: TControl) of object;
+
+  { TTurboNotebookVisiblePageEvent }
+
+  TTurboNotebookVisiblePageEvent = procedure(Sender: TObject; TabSheet: TTurboTabSheet; Content: TControl) of object;
+
+  { TTurboNotebook }
+
+  TTurboNotebook = class(TExtendedNotebook)
+  private
+    FAutoAlignContent: Boolean;
+    FContent: TControl;
+    FOnPrepareContent: TTurboNotebookPrepareContentEvent;
+    FOnShowPage: TTurboNotebookVisiblePageEvent;
+    FOnHidePage: TTurboNotebookVisiblePageEvent;
+    procedure SetAutoAlignContent(Value: Boolean);
+    procedure SetContent(Value: TControl);
+    function GetActiveContent(): TControl;
+  protected
+    function GetPageClass(): TCustomPageClass; override;
+  public
+    constructor Create(Owner: TComponent); override;
+    property Content: TControl read FContent write SetContent;
+    property ActiveContent: TControl read GetActiveContent;
+  published
+    property AutoAlignContent: Boolean read FAutoAlignContent write SetAutoAlignContent default True;
+    property OnPrepareContent: TTurboNotebookPrepareContentEvent read FOnPrepareContent write FOnPrepareContent;
+    property OnShowPage: TTurboNotebookVisiblePageEvent read FOnShowPage write FOnShowPage;
+    property OnHidePage: TTurboNotebookVisiblePageEvent read FOnHidePage write FOnHidePage;
   end;
 
 implementation
@@ -192,6 +244,163 @@ begin
   FLastDropDownTick := GetTickCount64() + 100;
 
   inherited Click();
+end;
+
+{ TTurboTabSheet }
+
+procedure TTurboTabSheet.AttachContent(Content: TControl);
+begin
+  DeattachContent();
+
+  if Content <> nil then
+  begin
+    FActiveContent := Content;
+    FActiveContent.Parent := Self;
+  end;
+
+  AlignContent();
+end;
+
+procedure TTurboTabSheet.DeattachContent();
+begin
+  if (FActiveContent <> nil) then
+  begin
+    FActiveContent.Parent := nil;
+    FActiveContent := nil;
+  end;
+end;
+
+procedure TTurboTabSheet.AlignContent();
+begin
+  if (FActiveContent <> nil) and (FActiveContent.Align = alNone) and (PageControl is TTurboNotebook) and (TTurboNotebook(PageControl).FAutoAlignContent) then
+  begin
+    FActiveContent.SetBounds(
+      FActiveContent.BorderSpacing.AroundLeft,
+      FActiveContent.BorderSpacing.AroundTop,
+      ClientWidth - FActiveContent.BorderSpacing.AroundLeft - FActiveContent.BorderSpacing.AroundRight,
+      ClientHeight - FActiveContent.BorderSpacing.AroundTop - FActiveContent.BorderSpacing.AroundBottom
+    );
+  end;
+end;
+
+procedure TTurboTabSheet.SetContent(Value: TControl);
+begin
+  if FContent <> Value then
+  begin
+    FContent := Value;
+
+    if Self.Visible then
+    begin
+      AttachContent(FContent);
+    end;
+  end;
+end;
+
+procedure TTurboTabSheet.DoShow();
+var
+  NewContent: TControl;
+begin
+  if PageControl is TTurboNotebook then
+  begin
+    NewContent := nil;
+    if Assigned(TTurboNotebook(PageControl).FOnPrepareContent) then
+    begin
+      TTurboNotebook(PageControl).FOnPrepareContent(TTurboNotebook(PageControl), Self, NewContent);
+    end;
+
+    if NewContent <> nil then
+    begin
+      AttachContent(NewContent);
+    end else
+    if (FContent <> nil) then
+    begin
+      AttachContent(FContent);
+    end else
+    begin
+      AttachContent(TTurboNotebook(PageControl).FContent);
+    end;
+
+    if Assigned(TTurboNotebook(PageControl).FOnShowPage) then
+    begin
+      TTurboNotebook(PageControl).FOnShowPage(TTurboNotebook(PageControl), Self, FActiveContent);
+    end;
+  end;
+
+  inherited DoShow();
+end;
+
+procedure TTurboTabSheet.DoHide();
+begin
+  inherited DoHide();
+
+  if PageControl is TTurboNotebook then
+  begin
+    try
+      if Assigned(TTurboNotebook(PageControl).FOnHidePage) then
+      begin
+        TTurboNotebook(PageControl).FOnHidePage(TTurboNotebook(PageControl), Self, FActiveContent);
+      end;
+    finally
+      DeattachContent();
+    end;
+  end;
+end;
+
+procedure TTurboTabSheet.Resize();
+begin
+  if PageControl is TTurboNotebook then
+  begin
+    AlignContent();
+  end;
+
+  inherited Resize();
+end;
+
+{ TTurboNotebook }
+
+constructor TTurboNotebook.Create(Owner: TComponent);
+begin
+  inherited Create(Owner);
+
+  FAutoAlignContent := True;
+end;
+
+function TTurboNotebook.GetPageClass(): TCustomPageClass;
+begin
+  Result := TTurboTabSheet;
+end;
+
+procedure TTurboNotebook.SetContent(Value: TControl);
+begin
+  if FContent <> Value then
+  begin
+    FContent := Value;
+
+    if (ActivePage is TTurboTabSheet) and (TTurboTabSheet(ActivePage).FContent = nil) then
+    begin
+      TTurboTabSheet(ActivePage).AttachContent(FContent);
+    end;
+  end;
+end;
+
+procedure TTurboNotebook.SetAutoAlignContent(Value: Boolean);
+begin
+  if FAutoAlignContent <> Value then
+  begin
+    FAutoAlignContent := Value;
+    if ActivePage is TTurboTabSheet then
+    begin
+      TTurboTabSheet(ActivePage).AlignContent();
+    end;
+  end;
+end;
+
+function TTurboNotebook.GetActiveContent(): TControl;
+begin
+  if ActivePage is TTurboTabSheet then
+  begin
+    Result := TTurboTabSheet(ActivePage).FActiveContent;
+  end;
 end;
 
 end.

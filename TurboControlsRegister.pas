@@ -51,7 +51,8 @@ begin
     TTurboAxisPicker,
     TTurboFloatAxisPicker,
     TTurboScrollBox,
-    TTurboDropDownButton
+    TTurboDropDownButton,
+    TTurboNotebook
   ]);
 end;
 
