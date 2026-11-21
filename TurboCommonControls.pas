@@ -92,9 +92,13 @@ type
 
   TTurboNotebookPrepareContentEvent = procedure(Sender: TObject; TabSheet: TTurboTabSheet; var Content: TControl) of object;
 
-  { TTurboNotebookVisiblePageEvent }
+  { TTurboNotebookPageVisibleEvent }
 
-  TTurboNotebookVisiblePageEvent = procedure(Sender: TObject; TabSheet: TTurboTabSheet; Content: TControl) of object;
+  TTurboNotebookPageVisibleEvent = procedure(Sender: TObject; TabSheet: TTurboTabSheet; Content: TControl) of object;
+
+  { TTurboNotebookPageChangeEvent }
+
+  TTurboNotebookPageChangeEvent = procedure(Sender: TObject; TabSheet: TTabSheet; Content: TControl) of object;
 
   { TTurboNotebook }
 
@@ -102,14 +106,18 @@ type
   private
     FAutoAlignContent: Boolean;
     FContent: TControl;
+    FAddingPages: Boolean;
     FOnPrepareContent: TTurboNotebookPrepareContentEvent;
-    FOnShowPage: TTurboNotebookVisiblePageEvent;
-    FOnHidePage: TTurboNotebookVisiblePageEvent;
+    FOnPageShow: TTurboNotebookPageVisibleEvent;
+    FOnPageHide: TTurboNotebookPageVisibleEvent;
+    FOnPageChange: TTurboNotebookPageChangeEvent;
     procedure SetAutoAlignContent(Value: Boolean);
     procedure SetContent(Value: TControl);
     function GetActiveContent(): TControl;
   protected
     function GetPageClass(): TCustomPageClass; override;
+    procedure CNNotify(var Message: TLMNotify); message CN_NOTIFY;
+    procedure CreateWnd(); override;
   public
     constructor Create(Owner: TComponent); override;
     property Content: TControl read FContent write SetContent;
@@ -117,8 +125,9 @@ type
   published
     property AutoAlignContent: Boolean read FAutoAlignContent write SetAutoAlignContent default True;
     property OnPrepareContent: TTurboNotebookPrepareContentEvent read FOnPrepareContent write FOnPrepareContent;
-    property OnShowPage: TTurboNotebookVisiblePageEvent read FOnShowPage write FOnShowPage;
-    property OnHidePage: TTurboNotebookVisiblePageEvent read FOnHidePage write FOnHidePage;
+    property OnPageShow: TTurboNotebookPageVisibleEvent read FOnPageShow write FOnPageShow;
+    property OnPageHide: TTurboNotebookPageVisibleEvent read FOnPageHide write FOnPageHide;
+    property OnPageChange: TTurboNotebookPageChangeEvent read FOnPageChange write FOnPageChange;
   end;
 
 implementation
@@ -320,9 +329,9 @@ begin
       AttachContent(TTurboNotebook(PageControl).FContent);
     end;
 
-    if Assigned(TTurboNotebook(PageControl).FOnShowPage) then
+    if Assigned(TTurboNotebook(PageControl).FOnPageShow) then
     begin
-      TTurboNotebook(PageControl).FOnShowPage(TTurboNotebook(PageControl), Self, FActiveContent);
+      TTurboNotebook(PageControl).FOnPageShow(TTurboNotebook(PageControl), Self, FActiveContent);
     end;
   end;
 
@@ -336,9 +345,9 @@ begin
   if PageControl is TTurboNotebook then
   begin
     try
-      if Assigned(TTurboNotebook(PageControl).FOnHidePage) then
+      if Assigned(TTurboNotebook(PageControl).FOnPageHide) then
       begin
-        TTurboNotebook(PageControl).FOnHidePage(TTurboNotebook(PageControl), Self, FActiveContent);
+        TTurboNotebook(PageControl).FOnPageHide(TTurboNotebook(PageControl), Self, FActiveContent);
       end;
     finally
       DeattachContent();
@@ -368,6 +377,29 @@ end;
 function TTurboNotebook.GetPageClass(): TCustomPageClass;
 begin
   Result := TTurboTabSheet;
+end;
+
+procedure TTurboNotebook.CNNotify(var Message: TLMNotify);
+begin
+  inherited;
+
+  if (Message.NMHdr.Code = TCN_SELCHANGE) and (not FAddingPages) and ([csLoading, csDestroying] * ComponentState = []) then
+  begin
+    if Assigned(FOnPageChange) then
+    begin
+      FOnPageChange(Self, ActivePage, GetActiveContent());
+    end;
+  end;
+end;
+
+procedure TTurboNotebook.CreateWnd();
+begin
+  FAddingPages := True;
+  try
+    inherited CreateWnd();
+  finally
+    FAddingPages := False;
+  end;
 end;
 
 procedure TTurboNotebook.SetContent(Value: TControl);
